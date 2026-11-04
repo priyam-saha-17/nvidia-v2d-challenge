@@ -18,12 +18,18 @@ published artifacts. No Track 1 scored submission exists yet.
 
 ## Running / pending
 
-- `v2d-track1-object-shape`: image-conditioned Hunyuan3D geometry hypothesis.
+- `v2d-track1-object-shape` completed. Its real hoop geometry was simplified to
+  4096 faces/2048 vertices, preserving a watertight open-centre surface.
+- First generated artifacts are published at
+  https://github.com/priyam-saha-17/nvidia-v2d-challenge/releases/tag/track1-development-20261104
+  and explicitly marked unscored development outputs.
 - `v2d-track1-reconstruction`: reusable runtime cache, approved private checkpoint
   extraction and verification, public model preparation, human/depth bootstrap,
   metric object calibration, final native CARI4D inference and checked MHR export.
-- Remaining-video segmentation batches use FP16 with matching SAM2 memory dtype,
-  finite output checks and FP32 retry on failure. Throughput/quality are pending.
+- `v2d-track1-segments-a` is running; episodes 1 and 2 passed in FP16.
+  Remaining-video segmentation batches use FP16 with matching SAM2 memory dtype,
+  finite output checks and FP32 retry on failure. Throughput is about 2.2 frames/s;
+  additional per-video visual quality review remains pending.
 - No actual episode reconstruction has finished. Exporter numerical validation,
   full-roster packing, official preflight/dry run, five uploads, score receipts
   and publication of produced artifacts are still pending.

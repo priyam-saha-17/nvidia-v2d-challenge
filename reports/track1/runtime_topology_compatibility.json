@@ -1,0 +1,11 @@
+{
+  "vertices": 4000,
+  "faces": 7996,
+  "watertight": true,
+  "model_sha256": "352e271a6c42729c68554ceaea0c955e866970160c31e35506d782dc0f7377bc",
+  "collision_faces_raw_int32_sha256": "f6748e290ef37fbb6877c4cc5bd7287105db9e98252b0ba170ae9ac3c45eacd6",
+  "barycentric_sums_valid": true,
+  "hand_model_sha256": "352e271a6c42729c68554ceaea0c955e866970160c31e35506d782dc0f7377bc",
+  "hand_faces_dtype_shape_data_sha256": "7f0898679b24c006e077df9531171a9206ae986d6d5885094cc646669b3784f5",
+  "face_hash_conventions": "Different upstream serialization conventions; native loaders validate each against actual MHR faces at refinement setup."
+}

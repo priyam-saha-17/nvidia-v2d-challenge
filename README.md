@@ -1,22 +1,30 @@
 # V2D Challenge experiments
 
 Work in progress for NVIDIA's [Video to Data Challenge](https://nvidia-isaac.github.io/video_to_data/v2d_challenge/).
-This repository currently contains infrastructure checks and an experimental trajectory
-refiner. It has no scored submission or demonstrated leaderboard improvement yet.
+Track 1 reconstruction is the active task. Its 30-video pipeline uses automatic
+segmentation, observed-image object reconstruction, native MHR human fitting,
+depth-based metric calibration, object tracking and contact refinement on Kaggle
+T4 GPUs. Production reconstruction is running; no scored submission exists yet.
+Track 2/3 are on hold until Track 1 is submitted and its artifacts are published.
+
+See [current Track 1 status](track1/STATUS.md), [execution and recovery](track1/EXECUTION.md),
+and [method](reports/track1/method.md). Earlier all-track infrastructure experiments
+are documented in [the original audit](reports/approach.md).
 
 ## Verified
 
 - All 23 Kaggle metric competitions entered under `priyamsaha17`.
-- Kaggle 2× T4 GPU computation and dataset access.
-- Isolated Python 3.11 installation of the pinned FlashCHORD runtime; JAX GPU
-  computation, Warp CUDA availability, Newton and FlashCHORD imports passed.
-- Three synthetic trajectory-refinement tests.
+- Two-device T4 native runtime, approved private checkpoint access and hash checks.
+- Full original-frame segmentation for all 30 Track 1 videos, including eight
+  automatic semantic repairs.
+- Actual image-conditioned geometry for nine non-hoop classes and mask-fitted
+  hoop geometry. All 27 non-hoop mesh hashes and face/vertex budgets pass checks.
+- Independent native MHR export diagnostic, with decoder round-trip error below
+  0.5 mm; no diagnostic fixture is used for scoring.
+- Lossless depth-cache PNG encoding speedup, preserving decoded depth values.
 
-Actual tissue-box simulation/training completed 131,072 environment steps and saved
-policy checkpoints. A 32-frame G1 retargeting probe passed on actual Tier 1 input;
-complete Tier 1 and Tier 2 retargeting batches are running. Model reconstruction,
-retargeting of the complete challenge roster, policy training and scored submissions
-remain unfinished. See [approach and status](reports/approach.md).
+Actual 30-episode reconstruction coverage, official packing and scoring remain
+pending. Runtime smoke tests and input checks do not establish leaderboard quality.
 
 ## Local setup
 

@@ -1,6 +1,9 @@
 # V2D competition audit — 4 November 2026
 
-## Objective and current state
+> Historical audit and chronological execution notes. For current work, see
+> [Track 1 status](../track1/STATUS.md) and [implemented method](track1/method.md).
+
+## Objective and initial state
 
 Produce valid, reproducible submissions to all 23 metric competitions. Kaggle authentication now works as `priyamsaha17`. Entry is confirmed for all 23 competitions. The user confirms separate NVIDIA team registration. No competition
 submission or policy training has run. A private T4 diagnostic completed successfully:

@@ -19,10 +19,11 @@ published. See [STATUS.md](STATUS.md) for current verification limits.
 6. `submit.py`: official full-roster packing, preflight, dry run and optional
    upload to all five metric competitions, with a real producing commit URL.
 
-The T4 runtime and first-video segmentation are verified. First object geometry
-has been generated and simplified with its open-centre topology preserved. Actual
-pose reconstruction and native export validation are pending; no scoring artifact
-exists yet. See [EXECUTION.md](EXECUTION.md) for run and recovery instructions.
+The T4 runtime, all-video masks, non-hoop source geometry and independent native
+MHR export diagnostic are verified. Production trajectory reconstruction is
+running. A pilot packaging failure exposed two Git LFS topology placeholders;
+`patch_runtime.py` now restores the actual public assets with pinned hash checks.
+See [STATUS.md](STATUS.md) and [EXECUTION.md](EXECUTION.md) for remaining gates.
 
 ## Artifacts
 

@@ -1,0 +1,245 @@
+[
+  {
+    "episode": 3,
+    "class": "big_red_bowl",
+    "source_episode": 5,
+    "vertices": 2050,
+    "faces": 4096,
+    "watertight": true,
+    "mesh_sha256": "e7677af5d3cded0a8b110917867da031e52f75b9b0bf26333430ee16a99b7a91"
+  },
+  {
+    "episode": 4,
+    "class": "big_red_bowl",
+    "source_episode": 5,
+    "vertices": 2050,
+    "faces": 4096,
+    "watertight": true,
+    "mesh_sha256": "e7677af5d3cded0a8b110917867da031e52f75b9b0bf26333430ee16a99b7a91"
+  },
+  {
+    "episode": 5,
+    "class": "big_red_bowl",
+    "source_episode": 5,
+    "vertices": 2050,
+    "faces": 4096,
+    "watertight": true,
+    "mesh_sha256": "e7677af5d3cded0a8b110917867da031e52f75b9b0bf26333430ee16a99b7a91"
+  },
+  {
+    "episode": 6,
+    "class": "iron",
+    "source_episode": 6,
+    "vertices": 2050,
+    "faces": 4096,
+    "watertight": true,
+    "mesh_sha256": "c023bf1eae9043b33fdd1a3c131fd9fed341f7706089d654751b4d3bc6370c82"
+  },
+  {
+    "episode": 7,
+    "class": "iron",
+    "source_episode": 6,
+    "vertices": 2050,
+    "faces": 4096,
+    "watertight": true,
+    "mesh_sha256": "c023bf1eae9043b33fdd1a3c131fd9fed341f7706089d654751b4d3bc6370c82"
+  },
+  {
+    "episode": 8,
+    "class": "iron",
+    "source_episode": 6,
+    "vertices": 2050,
+    "faces": 4096,
+    "watertight": true,
+    "mesh_sha256": "c023bf1eae9043b33fdd1a3c131fd9fed341f7706089d654751b4d3bc6370c82"
+  },
+  {
+    "episode": 9,
+    "class": "white_desk",
+    "source_episode": 11,
+    "vertices": 2050,
+    "faces": 4096,
+    "watertight": true,
+    "mesh_sha256": "d64cd0bc7ee2994e71ddaa4765a71133926c09a32bbf455c549dafea19ab7e03"
+  },
+  {
+    "episode": 10,
+    "class": "white_desk",
+    "source_episode": 11,
+    "vertices": 2050,
+    "faces": 4096,
+    "watertight": true,
+    "mesh_sha256": "d64cd0bc7ee2994e71ddaa4765a71133926c09a32bbf455c549dafea19ab7e03"
+  },
+  {
+    "episode": 11,
+    "class": "white_desk",
+    "source_episode": 11,
+    "vertices": 2050,
+    "faces": 4096,
+    "watertight": true,
+    "mesh_sha256": "d64cd0bc7ee2994e71ddaa4765a71133926c09a32bbf455c549dafea19ab7e03"
+  },
+  {
+    "episode": 12,
+    "class": "black_pan",
+    "source_episode": 12,
+    "vertices": 2050,
+    "faces": 4096,
+    "watertight": true,
+    "mesh_sha256": "767117649078a46d71ad3c60b137ca20bbd878b5a31da6cd3c2b86e16583de8e"
+  },
+  {
+    "episode": 13,
+    "class": "black_pan",
+    "source_episode": 12,
+    "vertices": 2050,
+    "faces": 4096,
+    "watertight": true,
+    "mesh_sha256": "767117649078a46d71ad3c60b137ca20bbd878b5a31da6cd3c2b86e16583de8e"
+  },
+  {
+    "episode": 14,
+    "class": "black_pan",
+    "source_episode": 12,
+    "vertices": 2050,
+    "faces": 4096,
+    "watertight": true,
+    "mesh_sha256": "767117649078a46d71ad3c60b137ca20bbd878b5a31da6cd3c2b86e16583de8e"
+  },
+  {
+    "episode": 15,
+    "class": "foam_grass_block",
+    "source_episode": 15,
+    "vertices": 2050,
+    "faces": 4096,
+    "watertight": true,
+    "mesh_sha256": "c2ca3454c02c47ac048b9615a6188ce5a230c33b79f437735af2ac4d98546437"
+  },
+  {
+    "episode": 16,
+    "class": "foam_grass_block",
+    "source_episode": 15,
+    "vertices": 2050,
+    "faces": 4096,
+    "watertight": true,
+    "mesh_sha256": "c2ca3454c02c47ac048b9615a6188ce5a230c33b79f437735af2ac4d98546437"
+  },
+  {
+    "episode": 17,
+    "class": "foam_grass_block",
+    "source_episode": 15,
+    "vertices": 2050,
+    "faces": 4096,
+    "watertight": true,
+    "mesh_sha256": "c2ca3454c02c47ac048b9615a6188ce5a230c33b79f437735af2ac4d98546437"
+  },
+  {
+    "episode": 18,
+    "class": "paint_roller",
+    "source_episode": 20,
+    "vertices": 2050,
+    "faces": 4096,
+    "watertight": true,
+    "mesh_sha256": "8d30cba73a38cf067c2d10f82b12f566af059890012f627914362cd38aef1dd0"
+  },
+  {
+    "episode": 19,
+    "class": "paint_roller",
+    "source_episode": 20,
+    "vertices": 2050,
+    "faces": 4096,
+    "watertight": true,
+    "mesh_sha256": "8d30cba73a38cf067c2d10f82b12f566af059890012f627914362cd38aef1dd0"
+  },
+  {
+    "episode": 20,
+    "class": "paint_roller",
+    "source_episode": 20,
+    "vertices": 2050,
+    "faces": 4096,
+    "watertight": true,
+    "mesh_sha256": "8d30cba73a38cf067c2d10f82b12f566af059890012f627914362cd38aef1dd0"
+  },
+  {
+    "episode": 21,
+    "class": "pink_foam_roll",
+    "source_episode": 22,
+    "vertices": 2050,
+    "faces": 4096,
+    "watertight": true,
+    "mesh_sha256": "ce941f39b77718a3155c9689518561e2cf80d9a56b8e46b1be21af253ab93707"
+  },
+  {
+    "episode": 22,
+    "class": "pink_foam_roll",
+    "source_episode": 22,
+    "vertices": 2050,
+    "faces": 4096,
+    "watertight": true,
+    "mesh_sha256": "ce941f39b77718a3155c9689518561e2cf80d9a56b8e46b1be21af253ab93707"
+  },
+  {
+    "episode": 23,
+    "class": "pink_foam_roll",
+    "source_episode": 22,
+    "vertices": 2050,
+    "faces": 4096,
+    "watertight": true,
+    "mesh_sha256": "ce941f39b77718a3155c9689518561e2cf80d9a56b8e46b1be21af253ab93707"
+  },
+  {
+    "episode": 24,
+    "class": "short_wood_stool",
+    "source_episode": 24,
+    "vertices": 2042,
+    "faces": 4096,
+    "watertight": true,
+    "mesh_sha256": "99179babdae08761fb2f8e60e76d50fcc5622ae4c698e915c09b3665fdc54903"
+  },
+  {
+    "episode": 25,
+    "class": "short_wood_stool",
+    "source_episode": 24,
+    "vertices": 2042,
+    "faces": 4096,
+    "watertight": true,
+    "mesh_sha256": "99179babdae08761fb2f8e60e76d50fcc5622ae4c698e915c09b3665fdc54903"
+  },
+  {
+    "episode": 26,
+    "class": "short_wood_stool",
+    "source_episode": 24,
+    "vertices": 2042,
+    "faces": 4096,
+    "watertight": true,
+    "mesh_sha256": "99179babdae08761fb2f8e60e76d50fcc5622ae4c698e915c09b3665fdc54903"
+  },
+  {
+    "episode": 27,
+    "class": "white_laptop_cart",
+    "source_episode": 29,
+    "vertices": 2033,
+    "faces": 4087,
+    "watertight": false,
+    "mesh_sha256": "eb9aa6d296725d7f39f4d7decf029be94d3046e73b33fa874e3362eab98b3791"
+  },
+  {
+    "episode": 28,
+    "class": "white_laptop_cart",
+    "source_episode": 29,
+    "vertices": 2033,
+    "faces": 4087,
+    "watertight": false,
+    "mesh_sha256": "eb9aa6d296725d7f39f4d7decf029be94d3046e73b33fa874e3362eab98b3791"
+  },
+  {
+    "episode": 29,
+    "class": "white_laptop_cart",
+    "source_episode": 29,
+    "vertices": 2033,
+    "faces": 4087,
+    "watertight": false,
+    "mesh_sha256": "eb9aa6d296725d7f39f4d7decf029be94d3046e73b33fa874e3362eab98b3791"
+  }
+]

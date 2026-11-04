@@ -21,7 +21,8 @@ def main():
     for specification in args.source:
         notebook, directory = specification.split('=', 1)
         root = Path(directory)
-        reports = list(root.rglob('batch_reconstruction_report.json'))
+        direct = root / 'batch_reconstruction_report.json'
+        reports = [direct] if direct.is_file() else list(root.rglob('batch_reconstruction_report.json'))
         if len(reports) != 1:
             raise ValueError(f'{notebook}: expected one production batch report')
         for entry in json.loads(reports[0].read_text()):

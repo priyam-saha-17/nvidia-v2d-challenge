@@ -17,7 +17,8 @@
     "priyamsaha17/v2d-track1-model-preparation",
     "priyamsaha17/v2d-track1-segments-b",
     "priyamsaha17/v2d-track1-segments-a",
-    "priyamsaha17/v2d-track1-segments-semantic"
+    "priyamsaha17/v2d-track1-segments-semantic",
+    "priyamsaha17/v2d-track1-inference-hoops"
   ],
   "machine_shape": "NvidiaTeslaT4"
 }

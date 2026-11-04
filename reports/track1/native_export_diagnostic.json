@@ -1,0 +1,10 @@
+{
+  "diagnostic_only": true,
+  "synthetic_parameters": true,
+  "challenge_episode_reconstructed": false,
+  "frames": 3,
+  "max_known_translation_error_m": 1.4308994877865189e-06,
+  "native_round_trip_error_m": 1.5690859527239809e-06,
+  "mhr_model_sha256": "352e271a6c42729c68554ceaea0c955e866970160c31e35506d782dc0f7377bc",
+  "fixture_arrays_retained": false
+}

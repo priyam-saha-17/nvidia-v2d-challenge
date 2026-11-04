@@ -1,0 +1,18 @@
+{
+  "id": "priyamsaha17/v2d-track1-iron-reconstruction",
+  "title": "V2D Track1 Iron Reconstruction",
+  "code_file": "iron.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": [
+    "priyamsaha17/v2d-track1-segments-a",
+    "priyamsaha17/v2d-track1-segments-semantic",
+    "priyamsaha17/v2d-track1-crop-ranking"
+  ]
+}

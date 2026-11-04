@@ -5,6 +5,7 @@ import nbformat as nb
 p=argparse.ArgumentParser()
 p.add_argument('--episodes',type=int,nargs='+',required=True)
 p.add_argument('--name',required=True)
+p.add_argument('--semantic',action='store_true')
 a=p.parse_args()
 if any(x not in range(1,30) for x in a.episodes):p.error('Use remaining Track 1 episodes 1..29')
 root=Path(__file__).resolve().parents[1]
@@ -23,6 +24,8 @@ s=s[:start]+"original=predictor_source.read_text()\npredictor_backup=original\n"
 b.cells[1].source=s
 source=(root/'track1/segment_video.py').read_text()
 code="Path('/tmp/segment_video.py').write_text("+repr(source)+")\n"
+code+="Path('/tmp/select_seed.py').write_text("+repr((root/'track1/select_seed.py').read_text())+")\n"
+code+=f"semantic={a.semantic!r}\n"
 code+=f"episode_ids={a.episodes!r}\n"
 code+='''base='https://huggingface.co/datasets/nvidia/video_to_data_challenge/resolve/main/track_1/'
 with urllib.request.urlopen(base+'meta/episodes_metadata.jsonl') as response: metadata={x['episode_index']:x for x in map(json.loads,response.read().decode().splitlines())}
@@ -41,6 +44,7 @@ for episode_id in episode_ids:
   for cache in predictor_source.parent.glob('__pycache__/sam2_video_predictor.*.pyc'):cache.unlink()
   command=[sys.executable,'/tmp/segment_video.py','--video',str(video),'--object-prompt',m['object_prompt'],
    '--sam2-checkpoint',str(checkpoint),'--output',str(output),'--expected-frames',str(episode['length']),'--precision',precision]
+  if semantic:command+=['--semantic','--object-class',m['object']]
   process=subprocess.run(command,env=env)
   if process.returncode==0:success=True;break
   print('Retrying failed segmentation in full precision',episode_id,flush=True)

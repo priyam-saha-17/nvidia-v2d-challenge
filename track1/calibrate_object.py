@@ -10,7 +10,6 @@ import hashlib
 import json
 from pathlib import Path
 import numpy as np
-from scipy.spatial import cKDTree
 import trimesh
 from prep.run_foundationpose_mhr_export import (
     _pose_estimator, _prepare_foundationpose_inputs, _render_candidate_masks)
@@ -55,7 +54,7 @@ def main():
         if pose.shape!=(4,4) or not np.isfinite(pose).all():
             raise ValueError('Invalid registered pose')
         obj_points=(cloud-pose[:3,3])@pose[:3,:3]
-        distances,_=cKDTree(np.asarray(candidate.vertices)).query(obj_points)
+        _,distances,_=trimesh.proximity.closest_point(candidate,obj_points)
         cutoff=np.quantile(distances,.8)
         surface_error=float(distances[distances<=cutoff].mean())
         centered=pose@np.linalg.inv(estimator.get_tf_to_centered_mesh().detach().cpu().numpy())

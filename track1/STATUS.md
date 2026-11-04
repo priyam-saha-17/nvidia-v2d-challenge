@@ -1,50 +1,44 @@
 # Track 1 execution status
 
-Active scope: Track 1 only. Track 2/3 execution remains on hold until Track 1
-has actual reconstructions, submissions to all five metric competitions and
-published artifacts. No Track 1 scored submission exists yet.
+Active scope: complete Track 1's five Kaggle submissions and publish the actual
+producing artifacts. Track 2/3 remain on hold. No scored Track 1 submission exists yet.
 
-## Verified
+Verified:
+- All 30 original videos and metadata are available. Automatic segmentation
+  completed all 30 timelines. Visual and automatic semantic audits identified
+  wrong-object candidates; eight affected videos are being corrected automatically.
+- The T4 native-MHR runtime passes CUDA nearest-neighbour, rendering and CARI4D
+  import checks. Its verified private runtime dataset is ready. Restoring uv's
+  unversioned Python alias fixes the cached interpreter link.
+- The approved private CARI4D/SAM3D checkpoint dataset is ready and file hashes pass.
+  CPU model preparation completed and its 1.91 GB public-model cache is reusable.
+- The independent native MHR export diagnostic passed: maximum translation error
+  1.43e-6 m and decoder round-trip error 1.57e-6 m. Synthetic fixture arrays were
+  removed and never used as challenge reconstructions.
+- Eight object classes have actual image-conditioned meshes, packaged for 24
+  episodes in a private compute dataset. The erroneous tripod/curtain shape
+  candidates are excluded by automatic semantic margins. The iron is pending.
+  Budget simplification warnings are retained; the official format does not
+  require exact preservation of generated topology.
+- Initial hoop masks/geometry and runtime reports are published in the explicitly
+  unscored development release on GitHub.
 
-- All 30 Track 1 videos and their released metadata are downloaded.
-- The official native-MHR runtime passes on Tesla T4: PyTorch 2.5.1/CUDA 12.4,
-  PyTorch3D GPU nearest-neighbours, nvdiffrast CUDA rendering context and CARI4D import.
-- Episode 0 automatic segmentation completed all 790 original frames. Preview
-  overlays and alpha topology were inspected; the hoop mask has an open centre.
-- The approved private Kaggle model dataset is ready. It contains eight explicit
-  CARI4D/SAM3D model/config/license files, no credentials. Public Git stores hashes.
-- A circular-tube prior was fitted to the observed hoop mask (2048 vertices,
-  4096 faces). Its scale and 3D pose still require observed-depth calibration.
+Running:
+- `v2d-track1-episode-000000` version 3: actual pilot reconstruction. Depth
+  estimation passed; native SAM3D human fitting is progressing across the full clip.
+  MoGe uses one device per episode to avoid a confirmed threaded CUDA lazy-init race.
+- `v2d-track1-segments-semantic`: Grounding DINO proposals reranked by SigLIP2
+  against released object classes/distractors; bidirectional SAM2 masks follow.
+- `v2d-track1-crop-ranking` completed: automatic semantic consistency audit for
+  all 30 original source crops. Recovered geometry selection uses these scores.
 
-## Running / pending
+Prepared, not yet validated end-to-end:
+- Iron reconstruction from the best positive-semantic source view.
+- Two-device reconstruction batches with full original-frame coverage, observed
+  triangle-surface scale calibration, clip-shared identity before contact refinement,
+  native MHR export and retention of actual model outputs/reports/previews.
 
-- `v2d-track1-object-shape` completed. Its real hoop geometry was simplified to
-  4096 faces/2048 vertices, preserving a watertight open-centre surface.
-- First generated artifacts are published at
-  https://github.com/priyam-saha-17/nvidia-v2d-challenge/releases/tag/track1-development-20261104
-  and explicitly marked unscored development outputs.
-- `v2d-track1-reconstruction` passed runtime validation and saved its 4.81 GB
-  cache, then failed because Kaggle had expanded the checkpoint tar automatically.
-  The loader is fixed; the verified runtime is being recovered into a private
-  dataset because failed notebook outputs cannot be attached to another notebook.
-- `v2d-track1-model-preparation` version 2 completed on CPU: approved checkpoint
-  integrity checks passed and public models were saved in a 1.91 GB reusable cache.
-- `v2d-track1-episode-000000` is prepared for the cached reconstruction retry.
-  Human/depth bootstrap, metric object calibration, CARI4D inference and native
-  MHR export remain to run. A CPU exporter diagnostic is also prepared.
-- Both remaining-video segmentation batches are running. Episodes 1–6 and
-  16–19 have passed in FP16 (plus the previously verified episode 0).
-  Remaining-video segmentation batches use FP16 with matching SAM2 memory dtype,
-  finite output checks and FP32 retry on failure. Throughput is about 2.2 frames/s;
-  additional per-video visual quality review remains pending.
-- No actual episode reconstruction has finished. Exporter numerical validation,
-  full-roster packing, official preflight/dry run, five uploads, score receipts
-  and publication of produced artifacts are still pending.
-
-The first reconstruction separates bootstrap and final exports. Its stage reuse
-records actual source/output identities; it never substitutes reference poses.
-T4 SAM3D uses FP32 because the original checkpoint config requests unsupported BF16.
-
-Generated reconstructions, meshes, previews, reports, final Parquet and receipts
-will be published in GitHub Releases after validation. Third-party checkpoint
-files remain in private Kaggle storage under their original licenses.
+Still required: complete real reconstructions for all 30 episodes; official packing,
+preflight and dry run; producing GitHub commit; uploads and score receipts for all
+five metrics; publish actual final artifacts and reproduction instructions. No
+placeholder trajectories or synthetic diagnostic fixtures enter the scoring roster.

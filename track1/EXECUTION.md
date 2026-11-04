@@ -37,7 +37,7 @@ The final export contains the calibrated mesh. Only unchanged human/depth stages
 are transferred, with file identities recorded. The native tracker and CoCoNet
 then estimate the full trajectory, followed by contact/temporal refinement.
 
-The current scale-search cost is trimmed observed point-to-mesh-vertex distance
+The current scale-search cost is trimmed observed point-to-triangle-surface distance
 plus an occlusion-aware silhouette penalty. This is an unbenchmarked heuristic;
 metric depth near thin objects and occlusion can bias it. The hoop's alternative
 circular-tube prior fits its automatic mask, without reference geometry. Generic
@@ -47,8 +47,10 @@ seed confidence among available released clips of each object, shares normalized
 geometry, and estimates metric scale independently in each episode.
 
 `prepare_mesh.py` removes degenerate generation debris and simplifies real
-geometry to 4096 faces/vertices. It checks closed-surface preservation and Euler
-characteristic; failures require inspection rather than silently changing topology.
+geometry to 4096 faces/vertices. It records closed-surface and Euler-characteristic changes; `--strict-topology`
+can reject them. The official fixed-budget packer also uses quadric simplification.
+Generated geometry is retained with explicit quality warnings rather than silently
+substituting a generic shape. Closed-surface preservation is not a format requirement.
 `export_cari4d.py` requires a complete original timeline and verifies native MHR
 parameter export by decoding the actual reference MHR model within 0.5 mm.
 
@@ -83,3 +85,15 @@ packs the exact scored rows, checks entry/quota in dry run, and sends one file t
 all five metrics only with `--upload`. Retain the packed file, kit, receipt and
 producing artifacts for container reproduction. Poll the same receipt until all
 scores are available. An environment preflight alone does not validate a reconstruction.
+
+The cached interpreter needs uv's unversioned alias restored to the archived
+Python 3.11.18 base. The native MHR numerical diagnostic now passes independently
+of image inference. MoGe's automatic multi-device threading triggered PyTorch's
+CUDA linear-algebra lazy-init race; use `moge_devices="cuda:0"` per episode and
+parallelize independent episodes across devices instead.
+
+New batches retain native prediction bundles, initialization outputs, reports,
+meshes and preview videos. Regenerable RGB/depth caches are removed between
+episodes unless `--retain-intermediates` is requested, bounding notebook output
+storage. The raw network output is preserved when shared per-clip identity and
+zero expression are projected into a separate bundle before contact refinement.

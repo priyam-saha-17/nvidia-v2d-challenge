@@ -43,6 +43,7 @@ while True:
   for job in jobs:
    if active>=2:break
    if job['started']:continue
+   if job.get('requires_ready_file') and not (ROOT/job['requires_ready_file']).is_file():continue
    if not all(by_name[name].get('status')=='COMPLETE' for name in job['dependencies']):continue
    datasets_ready=True
    for dataset in job.get('requires_datasets',[]):

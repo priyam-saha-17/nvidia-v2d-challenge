@@ -16,7 +16,7 @@ subprocess.run(['uv','python','install','3.11'],check=True)
 subprocess.run(['uv','venv','--python','3.11','/tmp/shape-env'],check=True)
 py='/tmp/shape-env/bin/python'
 subprocess.run(['uv','pip','install','--python',py,'torch==2.5.1','torchvision==0.20.1','--index-url','https://download.pytorch.org/whl/cu124'],check=True)
-subprocess.run(['uv','pip','install','--python',py,'transformers==4.48.3','diffusers==0.32.2','accelerate','einops','omegaconf','trimesh','pillow','numpy<2','scikit-image','opencv-python<4.12','pyyaml','tqdm','safetensors','huggingface_hub<1','pygltflib','pymeshlab','ninja','pybind11'],check=True)
+subprocess.run(['uv','pip','install','--python',py,'transformers==4.48.3','diffusers==0.32.2','accelerate','einops','omegaconf','trimesh','pillow','numpy<2','scikit-image','opencv-python<4.12','pyyaml','tqdm','safetensors','huggingface_hub<1','pygltflib','pymeshlab','fast_simplification','ninja','pybind11'],check=True)
 repo=Path('/tmp/Hunyuan3D-2')
 subprocess.run(['git','clone','--depth','1','https://github.com/Tencent-Hunyuan/Hunyuan3D-2.git',str(repo)],check=True)
 revision=subprocess.check_output(['git','rev-parse','HEAD'],cwd=repo,text=True).strip()

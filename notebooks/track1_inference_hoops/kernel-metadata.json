@@ -1,0 +1,20 @@
+{
+  "id": "priyamsaha17/v2d-track1-inference-hoops",
+  "title": "V2D Track1 Inference hoops",
+  "code_file": "inference.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "priyamsaha17/v2d-track1-private-pretrained-models",
+    "priyamsaha17/v2d-track1-private-native-runtime"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [
+    "priyamsaha17/v2d-track1-model-preparation",
+    "priyamsaha17/v2d-track1-segments-a"
+  ],
+  "machine_shape": "NvidiaTeslaT4"
+}

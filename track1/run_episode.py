@@ -5,7 +5,9 @@ export uses the calibrated object; unchanged camera/human/depth artifacts are
 transferred explicitly, with their source identities retained in the run report.
 """
 import argparse
+import hashlib
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -36,7 +38,7 @@ def main():
         bootstrap_outputs[name]=list(outputs)
         return result
 
-    options=dict(download_models=False,expected_frames=a.frames,moge_batch_size=2,
+    options=dict(download_models=False,expected_frames=a.frames,moge_batch_size=1,moge_devices="cuda:0",
         sam3d_chunk_size=1,sam3d_refit_batch_size=32,
         depth_alignment_render_batch_size=1,depth_alignment_encoding_workers=2,
         depth_alignment_write_batch_size=16,coconet_render_batch_size=1,
@@ -70,13 +72,39 @@ def main():
     transferred=[]
 
     def final_stage(name,command,inputs,outputs,marker_root,env,overwrite):
+        if name=='07_refinement':
+            # The scoring schema has one identity and zero expression per clip.
+            # Refine contacts against that same geometry, preserving the raw prediction.
+            import torch
+            original_bundle=Path(command[command.index('--bundle')+1])
+            projected=original_bundle.with_name('shared_identity.pth')
+            bundle=torch.load(original_bundle,map_location='cpu',weights_only=False)
+            shared={key:np.median(np.asarray(bundle['pr'][key]),axis=0).astype(np.float32)
+                    for key in ('mhr_shape','mhr_scale')}
+            for section in ('pr','pr_initial'):
+                if section not in bundle:continue
+                for key,value in shared.items():bundle[section][key]=np.repeat(value[None],a.frames,axis=0)
+                bundle[section]['mhr_face']=np.zeros((a.frames,72),np.float32)
+            projection={'method':'per-clip median identity; zero expression matching scorer',
+                'source_bundle':str(original_bundle),
+                'source_sha256':hashlib.sha256(original_bundle.read_bytes()).hexdigest(),
+                'shape':shared['mhr_shape'].tolist(),'scale_latents':shared['mhr_scale'].tolist(),
+                'ground_truth_used':False}
+            bundle['metadata']['shared_identity_projection']=projection
+            torch.save(bundle,projected)
+            (projected.parent/'identity_projection_report.json').write_text(json.dumps(projection,indent=2)+'\n')
+            command=list(command);command[command.index('--bundle')+1]=str(projected)
+            inputs=[projected,*list(inputs)[1:]]
+            return original(name,command,inputs,outputs,marker_root,env,overwrite)
         if name not in {'01_depth','03_human_initialization','04_depth_alignment'}:
             return original(name,command,inputs,outputs,marker_root,env,overwrite)
         source=bootstrap_outputs[name]
         if len(source)!=len(outputs):raise ValueError('Native stage output contract changed')
         for src,dst in zip(source,outputs):
             dst.parent.mkdir(parents=True,exist_ok=True)
-            shutil.copy2(src,dst)
+            if dst.exists():dst.unlink()
+            try:os.link(src,dst)
+            except OSError:shutil.copy2(src,dst)
         entry={'name':name,'reused':True,'elapsed_seconds':0.,
             'reuse_reason':'Identical video, masks and camera; object-independent stage',
             'source_outputs':native._output_identities(source),

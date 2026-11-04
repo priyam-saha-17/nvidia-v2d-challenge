@@ -35,7 +35,17 @@ with tarfile.open(cache) as archive:
   name=item.name.rstrip('/')+'/'
   if not name.startswith(allowed):raise ValueError('Unexpected runtime archive member '+item.name)
  archive.extractall('/',filter='fully_trusted')
-py='/tmp/track1-env/bin/python';cuda=Path('/tmp/cuda124')
+py='/tmp/track1-env/bin/python'
+# uv's venv link uses an unversioned alias that was not part of the cache.
+venv_python=Path(py)
+interpreter_target=Path(os.readlink(venv_python))
+base=Path(manifest['paths'][-1])
+assert (base/'bin'/interpreter_target.name).is_file(),'Cached base interpreter missing'
+alias=interpreter_target.parent.parent
+if not alias.exists():alias.symlink_to(base,target_is_directory=True)
+assert venv_python.is_file(),'Python interpreter alias was not restored'
+subprocess.run([py,'-c','import sys; assert sys.version_info[:2]==(3,11); print(sys.version)'],check=True)
+cuda=Path('/tmp/cuda124')
 modules=Path('/tmp/video_to_data/reconstruction/modules')
 workspace=Path('/workspace');workspace.mkdir(exist_ok=True)
 for name in ['v2d_common','v2d_mv','v2d_mesh','v2d_foundation_pose','v2d_moge','v2d_sam3d_body','v2d_cari4d']:

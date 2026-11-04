@@ -1,0 +1,17 @@
+{
+  "id": "priyamsaha17/v2d-track1-crop-ranking",
+  "title": "V2D Track1 Crop Ranking",
+  "code_file": "rank.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": [
+    "priyamsaha17/v2d-track1-automatic-segmentation",
+    "priyamsaha17/v2d-track1-segments-a",
+    "priyamsaha17/v2d-track1-segments-b"
+  ]
+}

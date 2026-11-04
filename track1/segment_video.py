@@ -24,6 +24,8 @@ def main():
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--expected-frames',type=int,required=True)
     p.add_argument('--precision',choices=['float32','float16'],default='float32')
+    p.add_argument('--object-class')
+    p.add_argument('--semantic',action='store_true')
     a = p.parse_args()
     suffix='.0.color.mp4'
     if not a.video.name.endswith(suffix):
@@ -42,31 +44,35 @@ def main():
     cap.release()
     if index!=a.expected_frames:
         raise ValueError(f'Decoded {index} frames, expected {a.expected_frames}')
-    detector_id='IDEA-Research/grounding-dino-tiny'
-    processor=AutoProcessor.from_pretrained(detector_id)
-    detector=AutoModelForZeroShotObjectDetection.from_pretrained(detector_id).to('cuda').eval()
-    candidates=[]
-    for frame in sorted({min(index-1,t) for t in (0,15,30,60,120)}):
-        image=Image.open(frames/f'{frame:06d}.jpg').convert('RGB')
-        pair=[]
-        for prompt in ('a person.',a.object_prompt):
-            inputs=processor(images=image,text=prompt,return_tensors='pt').to('cuda')
-            with torch.inference_mode():prediction=detector(**inputs)
-            result=processor.post_process_grounded_object_detection(prediction,inputs.input_ids,
-                threshold=0.15,text_threshold=0.15,target_sizes=[(height,width)])[0]
-            keep=[i for i,b in enumerate(result['boxes']) if (b[2]-b[0])>=8 and (b[3]-b[1])>=8]
-            if not keep:break
-            best=max(keep,key=lambda i:float(result['scores'][i]))
-            pair.append({'box':result['boxes'][best].detach().cpu().tolist(),
-                         'confidence':float(result['scores'][best])})
-        if len(pair)==2:
-            candidates.append({'frame':frame,'human':pair[0],'object':pair[1],
-                               'score':pair[0]['confidence']+pair[1]['confidence']})
-    del detector,processor
-    torch.cuda.empty_cache()
-    if not candidates:
-        raise ValueError('No automatic human/object seed pair found; do not fabricate masks')
-    seed=max(candidates,key=lambda c:c['score'])
+    if a.semantic:
+        from select_seed import select_seed
+        seed,candidates,detector_id=select_seed(frames,index,height,width,a.object_prompt,a.object_class)
+    else:
+        detector_id='IDEA-Research/grounding-dino-tiny'
+        processor=AutoProcessor.from_pretrained(detector_id)
+        detector=AutoModelForZeroShotObjectDetection.from_pretrained(detector_id).to('cuda').eval()
+        candidates=[]
+        for frame in sorted({min(index-1,t) for t in (0,15,30,60,120)}):
+            image=Image.open(frames/f'{frame:06d}.jpg').convert('RGB')
+            pair=[]
+            for prompt in ('a person.',a.object_prompt):
+                inputs=processor(images=image,text=prompt,return_tensors='pt').to('cuda')
+                with torch.inference_mode():prediction=detector(**inputs)
+                result=processor.post_process_grounded_object_detection(prediction,inputs.input_ids,
+                    threshold=0.15,text_threshold=0.15,target_sizes=[(height,width)])[0]
+                keep=[i for i,b in enumerate(result['boxes']) if (b[2]-b[0])>=8 and (b[3]-b[1])>=8]
+                if not keep:break
+                best=max(keep,key=lambda i:float(result['scores'][i]))
+                pair.append({'box':result['boxes'][best].detach().cpu().tolist(),
+                             'confidence':float(result['scores'][best])})
+            if len(pair)==2:
+                candidates.append({'frame':frame,'human':pair[0],'object':pair[1],
+                                   'score':pair[0]['confidence']+pair[1]['confidence']})
+        del detector,processor
+        torch.cuda.empty_cache()
+        if not candidates:
+            raise ValueError('No automatic human/object seed pair found; do not fabricate masks')
+        seed=max(candidates,key=lambda c:c['score'])
     predictor=build_sam2_video_predictor('configs/sam2.1/sam2.1_hiera_l.yaml',
         a.sam2_checkpoint,device='cuda',apply_postprocessing=False)
     seen=set();areas={};preview_ids=set(np.linspace(0,index-1,8).astype(int).tolist())
@@ -110,7 +116,7 @@ def main():
     if seen!=set(range(index)):raise ValueError('Masks do not cover every original frame')
     report={'sequence':sequence,'frames':index,'fps':fps,'width':width,'height':height,
         'seed':seed,'seed_candidates':candidates,'detector':detector_id,
-        'object_prompt':a.object_prompt,'precision':a.precision,'manual_annotations_used':False,
+        'object_prompt':a.object_prompt,'precision':a.precision,'semantic_selection':a.semantic,'object_class':a.object_class,'manual_annotations_used':False,
         'frame_mask_areas':{str(k):v for k,v in sorted(areas.items())},
         'video_sha256':hashlib.sha256(a.video.read_bytes()).hexdigest()}
     (a.output/'segmentation_report.json').write_text(json.dumps(report,indent=2)+'\n')

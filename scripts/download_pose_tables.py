@@ -16,9 +16,12 @@ p = argparse.ArgumentParser()
 p.add_argument('--workers', type=int, default=4)
 p.add_argument('--prefix', default='')
 p.add_argument('--assets-only', action='store_true')
+p.add_argument('--videos-only', action='store_true')
 a = p.parse_args()
 inventory = json.loads((ROOT/'references/dataset_tree.json').read_text())
-suffixes = ('.glb', '.usda') if a.assets_only else ('.parquet', '.json', '.jsonl', '.md')
+if a.assets_only and a.videos_only:
+    p.error('Choose assets or videos, not both')
+suffixes = ('.mp4',) if a.videos_only else ('.glb', '.usda') if a.assets_only else ('.parquet', '.json', '.jsonl', '.md')
 files = [x for x in inventory if x['type'] == 'file' and
          x['path'].startswith(a.prefix) and x['path'].endswith(suffixes)]
 

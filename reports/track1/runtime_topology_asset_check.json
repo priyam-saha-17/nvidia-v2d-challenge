@@ -1,0 +1,14 @@
+[
+  {
+    "name": "mhr_collision_proxy_4000v.npz",
+    "bytes": 126142,
+    "sha256": "a026fe82599609ee82814b4c18eb0335fa70925740dea5e1c1e1c0930d5edcf7",
+    "source_revision": "8c778f905cb35f76f8e6cd6e2ea486da4fb9e0ef"
+  },
+  {
+    "name": "mhr_hand_surface_spec.npz",
+    "bytes": 47140,
+    "sha256": "65e467ae534281c8c5370b76d672c80cf99b95bc73af9c3ac64d5bea6c7f60c8",
+    "source_revision": "8c778f905cb35f76f8e6cd6e2ea486da4fb9e0ef"
+  }
+]

@@ -13,7 +13,7 @@ and saves a runtime archive, including original third-party source/license files
 Its explicit archive directories exclude credentials and model caches. The run
 failed after saving that cache because Kaggle expanded the uploaded checkpoint
 tar into `track1_models/`. The loader now handles that actual layout. The cache
-is being moved to a private dataset with a `.bin` suffix to retain its archive
+was moved to a ready private dataset with a `.bin` suffix to retain its archive
 format. Failed notebook outputs cannot be attached as a new notebook input.
 `v2d-track1-model-preparation` version 2 completed on CPU and caches public
 weights separately; subsequent jobs restore both caches with hash verification.
@@ -61,10 +61,10 @@ credential privately; never print or commit it.
 
 ```bash
 source .secrets/kaggle.env
-.venv/bin/python scripts/track1_queue.py --watch --hours 8
+.venv/bin/python scripts/track1_queue.py --state outputs/track1_production_queue.json --watch --hours 6
 ```
 
-Queue state is `outputs/track1_queue.json`; restarting reads it and does not
+Current production queue state is `outputs/track1_production_queue.json`; restarting reads it and does not
 resubmit completed/failed notebooks. A failed execution is not retried automatically.
 The bounded log utility writes raw logs locally and prints only a tail:
 
@@ -97,3 +97,14 @@ meshes and preview videos. Regenerable RGB/depth caches are removed between
 episodes unless `--retain-intermediates` is requested, bounding notebook output
 storage. The raw network output is preserved when shared per-clip identity and
 zero expression are projected into a separate bundle before contact refinement.
+
+
+## Collect completed production jobs
+
+Download only final episode NPZ/GLB/export reports and the batch report first,
+using `kaggle kernels output --file-pattern` to avoid unnecessary cache downloads.
+Pass each exact notebook/version and local download directory to
+`track1/collect_outputs.py --source NOTEBOOK/VERSION=DIRECTORY --output OUTPUT`.
+It records artifact hashes and requires 30 unique successful episodes before
+returning success. Retain the complete native bundles and previews separately
+for the final GitHub artifacts and required reproduction container.

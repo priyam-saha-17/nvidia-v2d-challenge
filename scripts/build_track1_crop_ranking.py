@@ -25,7 +25,13 @@ for name,descriptions in DESCRIPTIONS.items():
 for text in DISTRACTORS:labels.append('distractor:'+text);texts.append('This is a photo of '+text+'.')
 url='https://huggingface.co/datasets/nvidia/video_to_data_challenge/resolve/main/track_1/meta/episodes_metadata.jsonl'
 with urllib.request.urlopen(url) as f:metadata={x['episode_index']:x for x in map(json.loads,f.read().decode().splitlines())}
-paths=sorted(Path('/kaggle/input').rglob('object_observation.png'))
+all_paths=sorted(Path('/kaggle/input').rglob('object_observation.png'))
+chosen={}
+for path in all_paths:
+ episode=int(path.parent.name.split('_')[-1])
+ semantic=json.loads(path.with_name('segmentation_report.json').read_text()).get('semantic_selection',False)
+ if episode not in chosen or semantic:chosen[episode]=path
+paths=[chosen[key] for key in sorted(chosen)]
 assert len(paths)==30,len(paths)
 records=[]
 for start in range(0,len(paths),4):
@@ -44,5 +50,5 @@ Path('/kaggle/working/semantic_crop_ranking.json').write_text(json.dumps(records
 ast.parse(code);b.cells.append(nb.v4.new_code_cell(code));nb.validate(b)
 dest=root/'notebooks/track1_crop_ranking';dest.mkdir(exist_ok=True);nb.write(b,dest/'rank.ipynb')
 meta=json.loads((root/'notebooks/track1_model_preparation/kernel-metadata.json').read_text())
-meta.update(id='priyamsaha17/v2d-track1-crop-ranking',title='V2D Track1 Crop Ranking',code_file='rank.ipynb',dataset_sources=[],kernel_sources=['priyamsaha17/v2d-track1-automatic-segmentation','priyamsaha17/v2d-track1-segments-a','priyamsaha17/v2d-track1-segments-b'])
+meta.update(id='priyamsaha17/v2d-track1-crop-ranking',title='V2D Track1 Crop Ranking',code_file='rank.ipynb',dataset_sources=[],kernel_sources=['priyamsaha17/v2d-track1-automatic-segmentation','priyamsaha17/v2d-track1-segments-a','priyamsaha17/v2d-track1-segments-b','priyamsaha17/v2d-track1-segments-semantic'])
 (dest/'kernel-metadata.json').write_text(json.dumps(meta,indent=2)+'\n')

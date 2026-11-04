@@ -29,6 +29,7 @@ def main():
     p.add_argument('--devices',default='0,1')
     p.add_argument('--weights',type=Path,required=True)
     p.add_argument('--input-root',type=Path,default=Path('/kaggle/input'))
+    p.add_argument('--dataset-root',type=Path,help='Read released videos/meta offline from a mounted challenge dataset')
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--retain-intermediates',action='store_true')
     a=p.parse_args()
@@ -37,14 +38,20 @@ def main():
     devices=a.devices.split(',')
     if len(set(devices))!=len(devices) or not all(x.isdigit() for x in devices):p.error('Expected distinct CUDA device numbers')
     base='https://huggingface.co/datasets/nvidia/video_to_data_challenge/resolve/main/track_1/'
-    with urllib.request.urlopen(base+'meta/episodes_metadata.jsonl') as f:metadata={x['episode_index']:x for x in map(json.loads,f.read().decode().splitlines())}
-    with urllib.request.urlopen(base+'meta/episodes.jsonl') as f:episodes={x['episode_index']:x for x in map(json.loads,f.read().decode().splitlines())}
+    if a.dataset_root:
+        dataset=a.dataset_root/'track_1' if (a.dataset_root/'track_1/meta').is_dir() else a.dataset_root
+        metadata={x['episode_index']:x for x in map(json.loads,(dataset/'meta/episodes_metadata.jsonl').read_text().splitlines())}
+        episodes={x['episode_index']:x for x in map(json.loads,(dataset/'meta/episodes.jsonl').read_text().splitlines())}
+    else:
+        with urllib.request.urlopen(base+'meta/episodes_metadata.jsonl') as f:metadata={x['episode_index']:x for x in map(json.loads,f.read().decode().splitlines())}
+        with urllib.request.urlopen(base+'meta/episodes.jsonl') as f:episodes={x['episode_index']:x for x in map(json.loads,f.read().decode().splitlines())}
     a.output.mkdir(parents=True,exist_ok=True)
     records=[];lock=threading.Lock();code=Path(__file__).resolve().parent
 
     def worker(device,ids):
         env=os.environ.copy();env['CUDA_VISIBLE_DEVICES']=device;env['PYTHONUNBUFFERED']='1'
         env['PYTORCH_CUDA_ALLOC_CONF']='expandable_segments:True'
+        env.update(OMP_NUM_THREADS='2',MKL_NUM_THREADS='2',OPENBLAS_NUM_THREADS='1',NUMEXPR_NUM_THREADS='1')
         for episode_id in ids:
             name=f'episode_{episode_id:06d}';started=time.monotonic()
             log=a.output/(name+'.log')
@@ -60,7 +67,8 @@ def main():
                 if report['frames']!=episodes[episode_id]['length']:raise ValueError('Incorrect original frame coverage')
                 with retained_work(name+'-') as work:
                     work=Path(work);video=work/(m['sequence_id']+'.0.color.mp4')
-                    urllib.request.urlretrieve(base+f'videos/chunk-000/observation.images.exo_camera/{name}.mp4',video)
+                    if a.dataset_root:shutil.copy2(dataset/f'videos/chunk-000/observation.images.exo_camera/{name}.mp4',video)
+                    else:urllib.request.urlretrieve(base+f'videos/chunk-000/observation.images.exo_camera/{name}.mp4',video)
                     if sha256(video)!=report['video_sha256']:raise ValueError('Video differs from segmented source')
                     if m['object']=='hula_hoop':
                         subprocess.run([sys.executable,str(code/'fit_hoop.py'),'--image',str(report_path.with_name('object_observation.png')),'--output',str(work/'shape')],env=env,check=True)
@@ -118,8 +126,13 @@ def main():
                 records.append(result)
                 (a.output/'batch_reconstruction_report.json').write_text(json.dumps(records,indent=2)+'\n')
             print('EPISODE_RESULT',json.dumps(result),flush=True)
+    assigned=[[] for _ in devices];loads=[0 for _ in devices]
+    for episode in sorted(a.episodes,key=lambda value:episodes[value]['length'],reverse=True):
+        index=min(range(len(devices)),key=lambda value:loads[value])
+        assigned[index].append(episode);loads[index]+=episodes[episode]['length']+128
+    print('DEVICE_ASSIGNMENTS',json.dumps(dict(zip(devices,assigned))),flush=True)
     with ThreadPoolExecutor(max_workers=len(devices)) as pool:
-        futures=[pool.submit(worker,device,a.episodes[index::len(devices)]) for index,device in enumerate(devices)]
+        futures=[pool.submit(worker,device,assigned[index]) for index,device in enumerate(devices)]
         for future in futures:future.result()
     # Keep completed episodes attachable even if an independent episode failed.
     # Coverage and per-episode success are mandatory before submission.

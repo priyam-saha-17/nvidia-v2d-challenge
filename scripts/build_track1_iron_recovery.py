@@ -15,7 +15,8 @@ for path in Path('/kaggle/input').rglob('object_observation.png'):
  if report.get('semantic_selection'):
   margin=float(report['seed']['semantic_margin'])
  else:
-  value=by_hash[hashlib.sha256(path.read_bytes()).hexdigest()]
+  value=by_hash.get(hashlib.sha256(path.read_bytes()).hexdigest())
+  if value is None:continue
   margin=float(value['semantic_margin'])
  if margin>0:candidates.append((margin,path,report))
 assert candidates,'No automatic iron crop passes semantic verification'

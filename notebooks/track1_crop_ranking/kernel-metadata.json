@@ -12,6 +12,7 @@
   "kernel_sources": [
     "priyamsaha17/v2d-track1-automatic-segmentation",
     "priyamsaha17/v2d-track1-segments-a",
-    "priyamsaha17/v2d-track1-segments-b"
+    "priyamsaha17/v2d-track1-segments-b",
+    "priyamsaha17/v2d-track1-segments-semantic"
   ]
 }

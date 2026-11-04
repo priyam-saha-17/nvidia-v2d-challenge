@@ -1,0 +1,27 @@
+{
+  "diagnostic_only": true,
+  "synthetic_depth_codec_fixture": true,
+  "shape": [
+    1152,
+    1536
+  ],
+  "dtype": "uint16",
+  "cases": [
+    {
+      "compress_level": 9,
+      "optimize": true,
+      "seconds": 0.3783366661518812,
+      "bytes": 1407251,
+      "pixelwise_equal": true
+    },
+    {
+      "compress_level": 1,
+      "optimize": false,
+      "seconds": 0.045109208673238754,
+      "bytes": 2355892,
+      "pixelwise_equal": true
+    }
+  ],
+  "encoding_speedup": 8.387127091775636,
+  "maximum_depth_value_change": 0
+}

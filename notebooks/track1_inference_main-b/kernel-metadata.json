@@ -1,0 +1,23 @@
+{
+  "id": "priyamsaha17/v2d-track1-inference-main-b",
+  "title": "V2D Track1 Inference main-b",
+  "code_file": "inference.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "priyamsaha17/v2d-track1-private-pretrained-models",
+    "priyamsaha17/v2d-track1-private-native-runtime",
+    "priyamsaha17/v2d-track1-reconstructed-shapes"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [
+    "priyamsaha17/v2d-track1-model-preparation",
+    "priyamsaha17/v2d-track1-segments-b",
+    "priyamsaha17/v2d-track1-segments-a",
+    "priyamsaha17/v2d-track1-segments-semantic"
+  ],
+  "machine_shape": "NvidiaTeslaT4"
+}

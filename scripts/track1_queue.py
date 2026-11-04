@@ -6,6 +6,7 @@ of failed notebook executions. State is retained for interrupted monitoring.
 import argparse,json,subprocess,sys,time
 from pathlib import Path
 from kaggle.api.kaggle_api_extended import KaggleApi
+from requests.exceptions import HTTPError
 
 ROOT=Path(__file__).resolve().parents[1]
 p=argparse.ArgumentParser(description=__doc__)
@@ -38,11 +39,18 @@ while True:
     job['status']=getattr(response.status,'name',str(response.status).split('.')[-1])
     if getattr(response,'failure_message',None):job['failure_message']=response.failure_message
   by_name={j['name']:j for j in jobs}
-  active=sum(j.get('status') in {'RUNNING','QUEUED','INITIALIZED'} for j in jobs)
+  active=sum(j.get('gpu',True) and j.get('status') in {'RUNNING','QUEUED','INITIALIZED'} for j in jobs)
   for job in jobs:
    if active>=2:break
    if job['started']:continue
    if not all(by_name[name].get('status')=='COMPLETE' for name in job['dependencies']):continue
+   datasets_ready=True
+   for dataset in job.get('requires_datasets',[]):
+    try:datasets_ready &= api.dataset_status(dataset)=='ready'
+    except HTTPError as error:
+     if error.response is None or error.response.status_code!=404:raise
+     datasets_ready=False
+   if not datasets_ready:continue
    result=subprocess.run([sys.executable,'-m','kaggle','kernels','push','-p',str(ROOT/'notebooks'/job['directory']),'--accelerator','NvidiaTeslaT4'],capture_output=True,text=True)
    output=result.stdout+result.stderr
    if 'successfully pushed' in output:

@@ -31,13 +31,18 @@ Path('/kaggle/working/runtime_cache_manifest.json').write_text(json.dumps({
 print('Reusable runtime archived:',cache.stat().st_size,flush=True)
 '''))
 b.cells.append(nb.v4.new_code_cell('''weights=Path('/tmp/track1_weights');weights.mkdir(exist_ok=True)
+manifests=[json.loads(p.read_text()) for p in Path('/kaggle/input').rglob('model_manifest.json')]
+manifest=next(value for value in manifests if isinstance(value,list) and len(value)==8 and all('file' in x and 'sha256' in x for x in value))
 archives=list(Path('/kaggle/input').rglob('track1_models.tar'))
-assert len(archives)==1,archives
-with tarfile.open(archives[0]) as archive:archive.extractall(weights,filter='data')
-manifest=json.loads(next(Path('/kaggle/input').rglob('model_manifest.json')).read_text())
-# Select the dataset manifest, not the segmentation notebook's differently shaped manifest.
-if not isinstance(manifest,list):
- manifest=next(json.loads(p.read_text()) for p in Path('/kaggle/input').rglob('model_manifest.json') if isinstance(json.loads(p.read_text()),list))
+if len(archives)==1:
+ with tarfile.open(archives[0]) as archive:archive.extractall(weights,filter='data')
+else:
+ # Kaggle expands uploaded .tar files into a directory named after the archive.
+ roots=[p.parents[2] for p in Path('/kaggle/input').rglob('step200000.pth') if p.parent.name=='2026-08-25-09-35-57']
+ assert len(roots)==1,roots
+ for item in manifest:
+  source=roots[0]/item['file'];destination=weights/item['file']
+  destination.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(source,destination)
 for item in manifest:
  path=weights/item['file'];assert path.stat().st_size==item['bytes']
  assert file_sha256(path)==item['sha256'],path

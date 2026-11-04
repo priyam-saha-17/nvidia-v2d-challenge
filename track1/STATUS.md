@@ -23,10 +23,17 @@ published artifacts. No Track 1 scored submission exists yet.
 - First generated artifacts are published at
   https://github.com/priyam-saha-17/nvidia-v2d-challenge/releases/tag/track1-development-20261104
   and explicitly marked unscored development outputs.
-- `v2d-track1-reconstruction`: reusable runtime cache, approved private checkpoint
-  extraction and verification, public model preparation, human/depth bootstrap,
-  metric object calibration, final native CARI4D inference and checked MHR export.
-- `v2d-track1-segments-a` is running; episodes 1 and 2 passed in FP16.
+- `v2d-track1-reconstruction` passed runtime validation and saved its 4.81 GB
+  cache, then failed because Kaggle had expanded the checkpoint tar automatically.
+  The loader is fixed; the verified runtime is being recovered into a private
+  dataset because failed notebook outputs cannot be attached to another notebook.
+- `v2d-track1-model-preparation` version 2 completed on CPU: approved checkpoint
+  integrity checks passed and public models were saved in a 1.91 GB reusable cache.
+- `v2d-track1-episode-000000` is prepared for the cached reconstruction retry.
+  Human/depth bootstrap, metric object calibration, CARI4D inference and native
+  MHR export remain to run. A CPU exporter diagnostic is also prepared.
+- Both remaining-video segmentation batches are running. Episodes 1–6 and
+  16–19 have passed in FP16 (plus the previously verified episode 0).
   Remaining-video segmentation batches use FP16 with matching SAM2 memory dtype,
   finite output checks and FP32 retry on failure. Throughput is about 2.2 frames/s;
   additional per-video visual quality review remains pending.

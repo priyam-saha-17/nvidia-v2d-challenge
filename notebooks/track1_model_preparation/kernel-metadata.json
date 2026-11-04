@@ -1,0 +1,15 @@
+{
+  "id": "priyamsaha17/v2d-track1-model-preparation",
+  "title": "V2D Track1 Model Preparation",
+  "code_file": "prepare.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": true,
+  "dataset_sources": [
+    "priyamsaha17/v2d-track1-private-pretrained-models"
+  ],
+  "competition_sources": [],
+  "kernel_sources": []
+}

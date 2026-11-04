@@ -6,7 +6,7 @@ p=argparse.ArgumentParser()
 p.add_argument('--episode',type=int,required=True)
 p.add_argument('--segmentation-source',required=True)
 p.add_argument('--shape-source',help='Notebook containing episode_XXXXXX/normalized_shape.glb for non-hoop objects')
-p.add_argument('--runtime-source',default='priyamsaha17/v2d-track1-reconstruction')
+p.add_argument('--runtime-source',default='priyamsaha17/v2d-track1-model-preparation')
 a=p.parse_args()
 if a.episode not in range(30):p.error('Track 1 episode must be 0..29')
 root=Path(__file__).resolve().parents[1]
@@ -21,7 +21,8 @@ def file_sha256(path):
 manifests=list(Path('/kaggle/input').rglob('runtime_cache_manifest.json'))
 assert len(manifests)==1,manifests
 manifest=json.loads(manifests[0].read_text())
-cache=manifests[0].with_name('track1_runtime.tar.gz')
+cache=manifests[0].with_name('track1_runtime.bin')
+if not cache.exists():cache=manifests[0].with_name('track1_runtime.tar.gz')
 assert cache.stat().st_size==manifest['bytes']
 assert file_sha256(cache)==manifest['sha256']
 assert manifest['runtime_revision']=='8c778f905cb35f76f8e6cd6e2ea486da4fb9e0ef'
@@ -59,8 +60,24 @@ run=run.replace("'--episode','0'", "'--episode',str(episode_id)")
 # The automatic seed frame differs between clips; use its recorded index.
 run=run.replace("'--output','/kaggle/working/reconstruction'", "'--seed-frame',str(json.loads(image.with_name('segmentation_report.json').read_text())['seed']['frame']),\n '--output','/kaggle/working/reconstruction'")
 runtime_test=nb.v4.new_code_cell(template.cells[3].source.split("Path('/kaggle/working/track1_compiler_manifest.json')")[0])
+model_cell=nb.v4.new_code_cell(template.cells[-2].source)
+model_cell.source=model_cell.source.replace("subprocess.run([py,'-c',public_models],env=env,check=True)", """public_caches=list(Path('/kaggle/input').rglob('public_models.bin'))
+if public_caches:
+ assert len(public_caches)==1,public_caches
+ archive_path=public_caches[0]
+ cache_manifest=json.loads(archive_path.with_name('public_model_cache_manifest.json').read_text())
+ assert archive_path.stat().st_size==cache_manifest['bytes']
+ assert file_sha256(archive_path)==cache_manifest['sha256']
+ prefixes=tuple(x.rstrip('/')+'/' for x in cache_manifest['paths'])
+ with tarfile.open(archive_path) as archive:
+  for item in archive.getmembers():
+   if not (item.name.rstrip('/')+'/').startswith(prefixes):raise ValueError('Unexpected public-model cache member')
+  archive.extractall(weights,filter='data')
+ print('Verified public model cache restored',flush=True)
+else:
+ subprocess.run([py,'-c',public_models],env=env,check=True)""")
 b=nb.v4.new_notebook(metadata=template.metadata)
-b.cells=[nb.v4.new_markdown_cell(f'# Track 1 reconstructed episode {a.episode}\nRestore a hash-verified runtime and reconstruct the full original timeline.'),nb.v4.new_code_cell(bootstrap),runtime_test,template.cells[-2],nb.v4.new_code_cell(run)]
+b.cells=[nb.v4.new_markdown_cell(f'# Track 1 reconstructed episode {a.episode}\nRestore a hash-verified runtime and reconstruct the full original timeline.'),nb.v4.new_code_cell(bootstrap),runtime_test,model_cell,nb.v4.new_code_cell(run)]
 for c in b.cells:
  if c.cell_type=='code':ast.parse(c.source)
 nb.validate(b)
@@ -68,6 +85,7 @@ dest=root/'notebooks'/f'track1_episode_{a.episode:06d}';dest.mkdir(exist_ok=True
 nb.write(b,dest/'inference.ipynb')
 meta=json.loads((root/'notebooks/track1_inference/kernel-metadata.json').read_text())
 sources=list(dict.fromkeys([a.runtime_source,a.segmentation_source]+([a.shape_source] if a.shape_source else [])))
+meta['dataset_sources'].append('priyamsaha17/v2d-track1-private-native-runtime')
 meta.update(id=f'priyamsaha17/v2d-track1-episode-{a.episode:06d}',title=f'V2D Track1 Episode {a.episode:06d}',kernel_sources=sources)
 (dest/'kernel-metadata.json').write_text(json.dumps(meta,indent=2)+'\n')
 print(dest)

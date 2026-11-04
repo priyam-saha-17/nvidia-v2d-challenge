@@ -10,7 +10,13 @@ The native dependency smoke test passed in
 `priyamsaha17/v2d-reconstruction-checkpoint-access` version 6. The first actual
 reconstruction is `priyamsaha17/v2d-track1-reconstruction`. Its first step builds
 and saves a runtime archive, including original third-party source/license files.
-Its explicit archive directories exclude credentials and model caches.
+Its explicit archive directories exclude credentials and model caches. The run
+failed after saving that cache because Kaggle expanded the uploaded checkpoint
+tar into `track1_models/`. The loader now handles that actual layout. The cache
+is being moved to a private dataset with a `.bin` suffix to retain its archive
+format. Failed notebook outputs cannot be attached as a new notebook input.
+`v2d-track1-model-preparation` version 2 completed on CPU and caches public
+weights separately; subsequent jobs restore both caches with hash verification.
 
 Approved weights live in the private dataset
 `priyamsaha17/v2d-track1-private-pretrained-models`. Each file is verified against

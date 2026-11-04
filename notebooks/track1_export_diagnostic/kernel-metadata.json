@@ -1,0 +1,19 @@
+{
+  "id": "priyamsaha17/v2d-track1-native-export-diagnostic",
+  "title": "V2D Track1 Native Export Diagnostic",
+  "code_file": "diagnostic.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": true,
+  "dataset_sources": [
+    "priyamsaha17/v2d-track1-private-pretrained-models",
+    "priyamsaha17/v2d-track1-private-native-runtime"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [
+    "priyamsaha17/v2d-track1-model-preparation",
+    "priyamsaha17/v2d-track1-object-shape"
+  ]
+}

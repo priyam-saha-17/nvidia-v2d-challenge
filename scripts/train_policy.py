@@ -25,7 +25,7 @@ if a.worlds < 1 or a.steps < 1:
     p.error('Worlds and steps must be positive')
 experiment = 'g1_recon_body_flash_sac' if a.embodiment == 'g1' else 'sharpa_flash_sac'
 command = [sys.executable, str(script), f'experiment={experiment}',
-    f'task.parquet={a.reference.resolve()}', f'output_dir={a.output.resolve()}',
+    f'task.parquet="{a.reference.resolve()}"', f'output_dir="{a.output.resolve()}"',
     f'scene.world_count={a.worlds}', f'training.total_environment_steps={a.steps}',
     'training.replay.capacity=250000', 'training.replay.minimum_size=8192',
     'training.replay.batch_size=512', 'training.replay.observation_storage_dtype=float16',

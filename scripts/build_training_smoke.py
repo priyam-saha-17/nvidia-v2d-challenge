@@ -43,7 +43,7 @@ print('Verified LFS assets:',len(pointers))
 b.cells.append(nb.v4.new_code_cell('''reference=fc/'src/flash_chord/assets/human_motion_data/ego_recon/processed/sequence_id=tissue_box_simple/robot_name=sharpa_wave'
 output=Path('/kaggle/working/tissue_smoke')
 command=[py,'scripts/train_flash_sac.py','experiment=sharpa_flash_sac',
- f'task.parquet={reference}',f'output_dir={output}',
+ f'task.parquet="{reference}"',f'output_dir={output}',
  'scene.world_count=64','training.total_environment_steps=131072',
  'training.replay.capacity=16384','training.replay.minimum_size=1024',
  'training.replay.batch_size=256','training.replay.observation_storage_dtype=float16',

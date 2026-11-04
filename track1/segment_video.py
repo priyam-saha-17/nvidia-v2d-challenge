@@ -23,6 +23,7 @@ def main():
     p.add_argument('--sam2-checkpoint',required=True)
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--expected-frames',type=int,required=True)
+    p.add_argument('--precision',choices=['float32','float16'],default='float32')
     a = p.parse_args()
     suffix='.0.color.mp4'
     if not a.video.name.endswith(suffix):
@@ -69,7 +70,7 @@ def main():
     predictor=build_sam2_video_predictor('configs/sam2.1/sam2.1_hiera_l.yaml',
         a.sam2_checkpoint,device='cuda',apply_postprocessing=False)
     seen=set();areas={};preview_ids=set(np.linspace(0,index-1,8).astype(int).tolist())
-    with torch.inference_mode():
+    with torch.inference_mode(), torch.autocast('cuda',dtype=torch.float16,enabled=a.precision=='float16'):
         state=predictor.init_state(str(frames),offload_video_to_cpu=True,offload_state_to_cpu=True)
         for obj_id,role in ((0,'human'),(1,'object')):
             predictor.add_new_points_or_box(state,frame_idx=seed['frame'],obj_id=obj_id,
@@ -109,7 +110,7 @@ def main():
     if seen!=set(range(index)):raise ValueError('Masks do not cover every original frame')
     report={'sequence':sequence,'frames':index,'fps':fps,'width':width,'height':height,
         'seed':seed,'seed_candidates':candidates,'detector':detector_id,
-        'object_prompt':a.object_prompt,'manual_annotations_used':False,
+        'object_prompt':a.object_prompt,'precision':a.precision,'manual_annotations_used':False,
         'frame_mask_areas':{str(k):v for k,v in sorted(areas.items())},
         'video_sha256':hashlib.sha256(a.video.read_bytes()).hexdigest()}
     (a.output/'segmentation_report.json').write_text(json.dumps(report,indent=2)+'\n')

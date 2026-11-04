@@ -1,29 +1,37 @@
 # Track 1 execution status
 
-Active scope: Track 1 only. Do not start further Track 2/3 work until Track 1 has
-been implemented, submitted to all five metric competitions, and its produced
-artifacts and reproducibility instructions have been published to GitHub.
+Active scope: Track 1 only. Track 2/3 execution remains on hold until Track 1
+has actual reconstructions, submissions to all five metric competitions and
+published artifacts. No Track 1 scored submission exists yet.
 
-Track 2 has no active GPU job; the latest G1 probe ended with an error. Previous
-retargeting outputs remain preserved for later use.
+## Verified
 
-Track 1 requirements: reconstruct all 30 videos into native MHR parameters,
-object geometry and continuous poses. Pack with the official kit and a real
-producing commit; upload the same validated Parquet to all five leaderboards,
-then poll and retain score receipts. Publish our generated artifacts in GitHub
-Releases and the source/report in Git. Reference third-party checkpoint sources
-and hashes without adding tokens or gated model files to Git.
+- All 30 Track 1 videos and their released metadata are downloaded.
+- The official native-MHR runtime passes on Tesla T4: PyTorch 2.5.1/CUDA 12.4,
+  PyTorch3D GPU nearest-neighbours, nvdiffrast CUDA rendering context and CARI4D import.
+- Episode 0 automatic segmentation completed all 790 original frames. Preview
+  overlays and alpha topology were inspected; the hoop mask has an open centre.
+- The approved private Kaggle model dataset is ready. It contains eight explicit
+  CARI4D/SAM3D model/config/license files, no credentials. Public Git stores hashes.
+- A circular-tube prior was fitted to the observed hoop mask (2048 vertices,
+  4096 faces). Its scale and 3D pose still require observed-depth calibration.
 
-Current work: a T4-specific build of the official native-MHR CARI4D dependencies
-is running under the private reconstruction notebook. Video preprocessing,
-object mesh reconstruction, full inference and scored outputs remain unfinished.
-No Track 1 submission exists yet.
+## Running / pending
 
-Update: all 30 Track 1 videos are local. The first automatic segmentation run is
-propagating valid finite masks; FP32 throughput is about 1.4 seconds/frame. The
-native runtime initially lacked CUDA sparse/BLAS headers; the matching Torch
-CUDA headers were added and a rebuild is running. The checkpoint archive (8
-explicit files, 4,889,774,080 bytes) was approved for private Kaggle upload by the
-user and is uploading. No credentials are in the archive. Native MHR export and
-full-roster official submission orchestration code have been written but remain
-to be validated with actual reconstructed episodes.
+- `v2d-track1-object-shape`: image-conditioned Hunyuan3D geometry hypothesis.
+- `v2d-track1-reconstruction`: reusable runtime cache, approved private checkpoint
+  extraction and verification, public model preparation, human/depth bootstrap,
+  metric object calibration, final native CARI4D inference and checked MHR export.
+- Remaining-video segmentation batches use FP16 with matching SAM2 memory dtype,
+  finite output checks and FP32 retry on failure. Throughput/quality are pending.
+- No actual episode reconstruction has finished. Exporter numerical validation,
+  full-roster packing, official preflight/dry run, five uploads, score receipts
+  and publication of produced artifacts are still pending.
+
+The first reconstruction separates bootstrap and final exports. Its stage reuse
+records actual source/output identities; it never substitutes reference poses.
+T4 SAM3D uses FP32 because the original checkpoint config requests unsupported BF16.
+
+Generated reconstructions, meshes, previews, reports, final Parquet and receipts
+will be published in GitHub Releases after validation. Third-party checkpoint
+files remain in private Kaggle storage under their original licenses.

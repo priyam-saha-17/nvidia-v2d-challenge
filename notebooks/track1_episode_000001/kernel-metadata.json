@@ -1,0 +1,19 @@
+{
+  "id": "priyamsaha17/v2d-track1-episode-000001",
+  "title": "V2D Track1 Episode 000001",
+  "code_file": "inference.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "priyamsaha17/v2d-track1-private-pretrained-models"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [
+    "priyamsaha17/v2d-track1-reconstruction",
+    "priyamsaha17/v2d-track1-segments-a"
+  ],
+  "machine_shape": "NvidiaTeslaT4"
+}

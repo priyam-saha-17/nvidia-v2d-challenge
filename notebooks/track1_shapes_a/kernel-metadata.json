@@ -1,0 +1,16 @@
+{
+  "id": "priyamsaha17/v2d-track1-shapes-a",
+  "title": "V2D Track1 Shapes a",
+  "code_file": "shape.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": [
+    "priyamsaha17/v2d-track1-segments-a"
+  ]
+}

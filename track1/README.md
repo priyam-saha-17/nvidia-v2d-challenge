@@ -19,8 +19,10 @@ published. See [STATUS.md](STATUS.md) for current verification limits.
 6. `submit.py`: official full-roster packing, preflight, dry run and optional
    upload to all five metric competitions, with a real producing commit URL.
 
-The local scripts have syntax checks. Actual reconstruction and model adapter
-validation are pending. No Track 1 scoring artifact has been produced yet.
+The T4 runtime and first-video segmentation are verified. First object geometry
+has been generated and simplified with its open-centre topology preserved. Actual
+pose reconstruction and native export validation are pending; no scoring artifact
+exists yet. See [EXECUTION.md](EXECUTION.md) for run and recovery instructions.
 
 ## Artifacts
 

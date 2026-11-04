@@ -86,6 +86,24 @@ all five metrics only with `--upload`. Retain the packed file, kit, receipt and
 producing artifacts for container reproduction. Poll the same receipt until all
 scores are available. An environment preflight alone does not validate a reconstruction.
 
+The dedicated completion runner handles the frozen production notebook versions,
+paginated final-output downloads, collection, official validation and a single
+five-metric upload. It reserves the exact official receipt before uploading and
+resumes polling its IDs without re-packing a counted file. An ambiguous upload
+stops for diagnosis instead of automatically consuming more quota.
+
+```bash
+source .secrets/kaggle.env
+.venv/bin/python scripts/finish_track1.py --output outputs/track1_completion \
+  --commit https://github.com/priyam-saha-17/nvidia-v2d-challenge/commit/f4891dbcd4161c82ab522ab806157133f2c217ab \
+  --upload
+```
+
+Inspect `outputs/track1_completion/completion_state.json` before any separate
+upload. Once its receipt is reserved, use that receipt for recovery. The original
+unfiltered submission and the optional translation candidate have separate files
+and receipts; a candidate requires its actual reference decoder validation first.
+
 The cached interpreter needs uv's unversioned alias restored to the archived
 Python 3.11.18 base. The native MHR numerical diagnostic now passes independently
 of image inference. MoGe's automatic multi-device threading triggered PyTorch's

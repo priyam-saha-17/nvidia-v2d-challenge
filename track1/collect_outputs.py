@@ -35,7 +35,8 @@ def main():
             stem = f'episode_{episode:06d}'
             files = {}
             for suffix in ('.npz', '_object.glb', '.report.json'):
-                matches = list(root.rglob(stem + suffix))
+                exported = root / 'episodes' / (stem + suffix)
+                matches = [exported] if exported.is_file() else list(root.rglob(stem + suffix))
                 if len(matches) != 1:
                     raise ValueError(f'{notebook}: missing/ambiguous {stem + suffix}')
                 source = matches[0]

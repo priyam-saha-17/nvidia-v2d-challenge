@@ -13,15 +13,19 @@ for group in ('a','b'):
   if score is None or score['predicted_class']!=name or score['semantic_margin']<=0:continue
   if name not in selected or score['semantic_margin']>selected[name][2]['semantic_margin']:
    selected[name]=(group,score['episode'],score)
+recovery=root/'outputs/track1_iron_recovery'
+if (recovery/'iron/normalized_shape.glb').exists():
+ iron=json.loads((recovery/'iron_source.json').read_text())
+ selected['iron']=('recovered',iron['source_episode'],{'model':'google/siglip2-base-patch16-224','semantic_margin':iron['semantic_margin'],'source_sha256':iron['source_sha256'],'predicted_class':'iron'})
 dest=root/'outputs/track1_shape_dataset';dest.mkdir(exist_ok=True)
 manifest=[]
 for entry in metadata:
  name=entry['object']
  if name not in selected:continue
  group,source_episode,semantic=selected[name]
- prepared=root/'outputs/track1_accepted_shapes'/name
+ prepared=(recovery/'iron') if group=='recovered' else root/'outputs/track1_accepted_shapes'/name
  mesh=prepared/'normalized_shape.glb'
- raw_report=root/f'outputs/track1_shapes_{group}/raw_shapes'/name/'shape_report.json'
+ raw_report=(recovery/'raw_iron/shape_report.json') if group=='recovered' else root/f'outputs/track1_shapes_{group}/raw_shapes'/name/'shape_report.json'
  folder=dest/f"episode_{entry['episode_index']:06d}";folder.mkdir(exist_ok=True)
  shutil.copy2(mesh,folder/'normalized_shape.glb')
  report={'episode':entry['episode_index'],'object':name,'shape_source_episode':source_episode,
@@ -36,5 +40,5 @@ for entry in metadata:
 (dest/'shape_dataset_manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
 (dest/'dataset-metadata.json').write_text(json.dumps({'title':'V2D Track1 Reconstructed Shapes',
  'id':'priyamsaha17/v2d-track1-reconstructed-shapes','licenses':[{'name':'other'}],
- 'description':'Private compute artifacts: actual image-conditioned Track 1 object reconstruction, fixed-budget meshes and provenance. No reference geometry, credentials or pretrained checkpoint files. Eight reviewed object classes; corrected iron reconstruction is pending. Original model sources retain their own licenses.'},indent=2)+'\n')
-print('Prepared actual image-conditioned meshes for',len(manifest),'episodes; iron and hoop not included')
+ 'description':'Private compute artifacts: actual image-conditioned Track 1 object reconstruction, fixed-budget meshes and provenance. No reference geometry, credentials or pretrained checkpoint files. All nine non-hoop object classes have actual image-conditioned geometry. Hoop geometry is estimated directly from each observed mask. Original model sources retain their own licenses.'},indent=2)+'\n')
+print('Prepared actual image-conditioned meshes for',len(manifest),'episodes; hoop geometry is fitted directly from each observed mask')

@@ -8,7 +8,7 @@ submission or policy training has run. A private T4 diagnostic completed success
 The notebook default is Python 3.13.16. The isolated Python 3.11 runtime installation probe passed JAX GPU computation,
 Warp CUDA availability, and Newton/FlashCHORD imports. An actual tissue-box simulation
 and short-training smoke test has now been launched. Credentials are stored only in an ignored mode-600 local
-file. The repository currently has no GitHub remote.
+file. The producing-code repository is https://github.com/priyam-saha-17/nvidia-v2d-challenge (public, Apache-2.0).
 
 The official deadline is 4 November 2026, 17:00 EST, or **5 November, 03:30 IST**.
 There are five submission groups: Track 1 (5 metrics), Track 2 tiers 1–3
@@ -93,5 +93,21 @@ Native MHR CARI4D inference requires approved Hugging Face access to both
 
 - [Actual simulation/training smoke test (pending)](https://www.kaggle.com/code/priyamsaha17/v2d-flashchord-training-smoke)
 
-The user confirms approved Hugging Face access; private local token configuration
-is pending. A real GitHub repository URL is also pending. No scoring submissions exist.
+The user confirms approved Hugging Face access; private local token configuration is complete. CARI4D checkpoint access is verified,
+but SAM 3D Body access was denied because author review is still pending.
+The public GitHub repository has been created. No scoring submissions exist.
+
+## Tier 1 preparation
+
+All 30 released Tier 1 episodes have been exported to the official SOMA-to-G1
+input layout. Integration checks verified visible object transform round trips
+to 1e-6 tolerance and unchanged human translations for all 30 episodes.
+The one missing object observation in episode 11 was interpolated from its
+neighboring Tier 1 observations. Meshes, fitted ground planes and support surfaces
+were downloaded from the released Tier 1 folder. These are input references,
+not achieved policy trajectories.
+
+The first training test failed before simulation because Hydra requires quoting
+paths containing equals signs. That has been fixed and version 2 is running.
+An actual-data G1 retargeting probe is running at
+https://www.kaggle.com/code/priyamsaha17/v2d-tier1-retarget-probe .

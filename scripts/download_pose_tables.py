@@ -14,10 +14,13 @@ import shutil
 ROOT = Path(__file__).resolve().parents[1]
 p = argparse.ArgumentParser()
 p.add_argument('--workers', type=int, default=4)
+p.add_argument('--prefix', default='')
+p.add_argument('--assets-only', action='store_true')
 a = p.parse_args()
 inventory = json.loads((ROOT/'references/dataset_tree.json').read_text())
+suffixes = ('.glb', '.usda') if a.assets_only else ('.parquet', '.json', '.jsonl', '.md')
 files = [x for x in inventory if x['type'] == 'file' and
-         (x['path'].endswith(('.parquet', '.json', '.jsonl', '.md')))]
+         x['path'].startswith(a.prefix) and x['path'].endswith(suffixes)]
 
 def download(item):
     relative = Path(item['path'])
@@ -37,4 +40,4 @@ def download(item):
 
 with ThreadPoolExecutor(max_workers=a.workers) as pool:
     list(pool.map(download, files))
-print(f'Downloaded or verified {len(files)} public pose-table/metadata files')
+print(f'Downloaded or verified {len(files)} public files')

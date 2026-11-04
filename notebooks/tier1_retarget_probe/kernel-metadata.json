@@ -1,0 +1,14 @@
+{
+  "id": "priyamsaha17/v2d-tier1-retarget-probe",
+  "title": "V2D Tier1 Retarget Probe",
+  "code_file": "retarget.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": []
+}

@@ -129,3 +129,16 @@ https://www.kaggle.com/code/priyamsaha17/v2d-tier1-retarget-probe .
 The batch retargeting jobs are pending. There are still no complete challenge
 policy sets or leaderboard submissions. Training budgets and throughput for full
 G1 tasks remain to be measured; winning results are not established.
+
+## Submission preparation update
+
+Both full 30-episode Tier 1 and Tier 2 retargeting batches are COMPLETE; their
+reports list 30 motion parquets and no failures. Hugging Face access now verifies
+for both CARI4D and SAM 3D Body. The next actual challenge G1 policy/evaluation
+probe is running at https://www.kaggle.com/code/priyamsaha17/v2d-g1-policy-evaluation-probe .
+
+A private checkpoint-access notebook is saved without execution at
+https://www.kaggle.com/code/priyamsaha17/v2d-reconstruction-checkpoint-access .
+It requires the user to authorize an HF_TOKEN Kaggle Secret. The Mac login is
+not embedded in or uploaded with any notebook. Reconstruction inference remains
+to be implemented. There are no scored submissions yet.

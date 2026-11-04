@@ -66,6 +66,8 @@ subprocess.run([py,str(evaluator),'--checkpoints',str(mapping),'--results','/kag
 assert Path('/kaggle/working/results/episode_000000.parquet').is_file()
 print('Official unassisted evaluation complete')
 '''))
+normalizer=(root/'scripts/normalize_support_stages.py').read_text()
+b.cells.insert(5,nb.v4.new_code_cell("Path('/tmp/normalize_support.py').write_text("+repr(normalizer)+")\nsubprocess.run([py,'/tmp/normalize_support.py','/kaggle/working/motion_assets/human_motion_data/whole_body/reconstructed_stage'],check=True)"))
 for c in b.cells:
  if c.cell_type=='code':ast.parse(c.source)
 nb.validate(b);dest=root/'notebooks/g1_policy_probe';dest.mkdir(exist_ok=True)

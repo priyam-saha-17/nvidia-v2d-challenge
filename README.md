@@ -12,7 +12,9 @@ refiner. It has no scored submission or demonstrated leaderboard improvement yet
   computation, Warp CUDA availability, Newton and FlashCHORD imports passed.
 - Three synthetic trajectory-refinement tests.
 
-Actual simulation/training integration is under test. Model reconstruction,
+Actual tissue-box simulation/training completed 131,072 environment steps and saved
+policy checkpoints. A 32-frame G1 retargeting probe passed on actual Tier 1 input;
+complete Tier 1 and Tier 2 retargeting batches are running. Model reconstruction,
 retargeting of the complete challenge roster, policy training and scored submissions
 remain unfinished. See [approach and status](reports/approach.md).
 

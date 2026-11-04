@@ -111,3 +111,21 @@ The first training test failed before simulation because Hydra requires quoting
 paths containing equals signs. That has been fixed and version 2 is running.
 An actual-data G1 retargeting probe is running at
 https://www.kaggle.com/code/priyamsaha17/v2d-tier1-retarget-probe .
+
+## Verified execution update
+
+- Tissue-box training version 2 completed 131,072 environment steps and saved
+  `policy_65536.safetensors` and `policy_131072.safetensors`. Measured throughput
+  was approximately 665 environment steps/s with 64 worlds. These are integration
+  test checkpoints, not challenge results.
+- The actual Tier 1 episode-0 G1 retargeting probe completed 32 frames at about
+  10.66 frames/s and wrote a motion parquet and its object asset closure.
+- Both complete 30-episode Tier 1 and Tier 2 retargeting jobs have been launched:
+  https://www.kaggle.com/code/priyamsaha17/v2d-tier1-retarget-all and
+  https://www.kaggle.com/code/priyamsaha17/v2d-tier2-retarget-all .
+- The CARI4D checkpoint is accessible. SAM 3D Body remains awaiting author review;
+  the verified public SOMA-X assets allow Tier 1/2 retargeting independently.
+
+The batch retargeting jobs are pending. There are still no complete challenge
+policy sets or leaderboard submissions. Training budgets and throughput for full
+G1 tasks remain to be measured; winning results are not established.

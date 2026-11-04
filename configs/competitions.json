@@ -1,0 +1,209 @@
+[
+  {
+    "track": "track_1",
+    "metric": "cd_h_cm",
+    "slug": "v2d-challenge-track1-cd-h",
+    "higher_is_better": false,
+    "rules_url": "https://www.kaggle.com/competitions/v2d-challenge-track1-cd-h/rules",
+    "entry_status": "not_checked",
+    "submission_status": "not_submitted"
+  },
+  {
+    "track": "track_1",
+    "metric": "cd_o_cm",
+    "slug": "v2d-challenge-track1-cd-o",
+    "higher_is_better": false,
+    "rules_url": "https://www.kaggle.com/competitions/v2d-challenge-track1-cd-o/rules",
+    "entry_status": "not_checked",
+    "submission_status": "not_submitted"
+  },
+  {
+    "track": "track_1",
+    "metric": "acc_h_cm",
+    "slug": "v2d-challenge-track1-acc-h",
+    "higher_is_better": false,
+    "rules_url": "https://www.kaggle.com/competitions/v2d-challenge-track1-acc-h/rules",
+    "entry_status": "not_checked",
+    "submission_status": "not_submitted"
+  },
+  {
+    "track": "track_1",
+    "metric": "acc_o_cm",
+    "slug": "v2d-challenge-track1-acc-o",
+    "higher_is_better": false,
+    "rules_url": "https://www.kaggle.com/competitions/v2d-challenge-track1-acc-o/rules",
+    "entry_status": "not_checked",
+    "submission_status": "not_submitted"
+  },
+  {
+    "track": "track_1",
+    "metric": "interpenetration_cm",
+    "slug": "v2d-challenge-track1-pen",
+    "higher_is_better": false,
+    "rules_url": "https://www.kaggle.com/competitions/v2d-challenge-track1-pen/rules",
+    "entry_status": "not_checked",
+    "submission_status": "not_submitted"
+  },
+  {
+    "track": "track_2_tier1",
+    "metric": "add_auc",
+    "slug": "v2d-challenge-track2-tier1-auc",
+    "higher_is_better": true,
+    "rules_url": "https://www.kaggle.com/competitions/v2d-challenge-track2-tier1-auc/rules",
+    "entry_status": "not_checked",
+    "submission_status": "not_submitted"
+  },
+  {
+    "track": "track_2_tier1",
+    "metric": "spider_sr",
+    "slug": "v2d-challenge-track2-tier1-sp-sr",
+    "higher_is_better": true,
+    "rules_url": "https://www.kaggle.com/competitions/v2d-challenge-track2-tier1-sp-sr/rules",
+    "entry_status": "not_checked",
+    "submission_status": "not_submitted"
+  },
+  {
+    "track": "track_2_tier1",
+    "metric": "maniptrans_sr",
+    "slug": "v2d-challenge-track2-tier1-mp-sr",
+    "higher_is_better": true,
+    "rules_url": "https://www.kaggle.com/competitions/v2d-challenge-track2-tier1-mp-sr/rules",
+    "entry_status": "not_checked",
+    "submission_status": "not_submitted"
+  },
+  {
+    "track": "track_2_tier1",
+    "metric": "mppe_cm",
+    "slug": "v2d-challenge-track2-tier1-mppe",
+    "higher_is_better": false,
+    "rules_url": "https://www.kaggle.com/competitions/v2d-challenge-track2-tier1-mppe/rules",
+    "entry_status": "not_checked",
+    "submission_status": "not_submitted"
+  },
+  {
+    "track": "track_2_tier2",
+    "metric": "add_auc",
+    "slug": "v2d-challenge-track2-tier2-auc",
+    "higher_is_better": true,
+    "rules_url": "https://www.kaggle.com/competitions/v2d-challenge-track2-tier2-auc/rules",
+    "entry_status": "not_checked",
+    "submission_status": "not_submitted"
+  },
+  {
+    "track": "track_2_tier2",
+    "metric": "spider_sr",
+    "slug": "v2d-challenge-track2-tier2-sp-sr",
+    "higher_is_better": true,
+    "rules_url": "https://www.kaggle.com/competitions/v2d-challenge-track2-tier2-sp-sr/rules",
+    "entry_status": "not_checked",
+    "submission_status": "not_submitted"
+  },
+  {
+    "track": "track_2_tier2",
+    "metric": "maniptrans_sr",
+    "slug": "v2d-challenge-track2-tier2-mp-sr",
+    "higher_is_better": true,
+    "rules_url": "https://www.kaggle.com/competitions/v2d-challenge-track2-tier2-mp-sr/rules",
+    "entry_status": "not_checked",
+    "submission_status": "not_submitted"
+  },
+  {
+    "track": "track_2_tier2",
+    "metric": "mppe_cm",
+    "slug": "v2d-challenge-track2-tier2-mppe",
+    "higher_is_better": false,
+    "rules_url": "https://www.kaggle.com/competitions/v2d-challenge-track2-tier2-mppe/rules",
+    "entry_status": "not_checked",
+    "submission_status": "not_submitted"
+  },
+  {
+    "track": "track_2_tier3",
+    "metric": "add_auc",
+    "slug": "v2d-challenge-track2-tier3-auc",
+    "higher_is_better": true,
+    "rules_url": "https://www.kaggle.com/competitions/v2d-challenge-track2-tier3-auc/rules",
+    "entry_status": "not_checked",
+    "submission_status": "not_submitted"
+  },
+  {
+    "track": "track_2_tier3",
+    "metric": "spider_sr",
+    "slug": "v2d-challenge-track2-tier3-sp-sr",
+    "higher_is_better": true,
+    "rules_url": "https://www.kaggle.com/competitions/v2d-challenge-track2-tier3-sp-sr/rules",
+    "entry_status": "not_checked",
+    "submission_status": "not_submitted"
+  },
+  {
+    "track": "track_2_tier3",
+    "metric": "maniptrans_sr",
+    "slug": "v2d-challenge-track2-tier3-mp-sr",
+    "higher_is_better": true,
+    "rules_url": "https://www.kaggle.com/competitions/v2d-challenge-track2-tier3-mp-sr/rules",
+    "entry_status": "not_checked",
+    "submission_status": "not_submitted"
+  },
+  {
+    "track": "track_2_tier3",
+    "metric": "mppe_cm",
+    "slug": "v2d-challenge-track2-tier3-mppe",
+    "higher_is_better": false,
+    "rules_url": "https://www.kaggle.com/competitions/v2d-challenge-track2-tier3-mppe/rules",
+    "entry_status": "not_checked",
+    "submission_status": "not_submitted"
+  },
+  {
+    "track": "track_3",
+    "metric": "add_auc",
+    "slug": "v2d-challenge-track3-auc",
+    "higher_is_better": true,
+    "rules_url": "https://www.kaggle.com/competitions/v2d-challenge-track3-auc/rules",
+    "entry_status": "not_checked",
+    "submission_status": "not_submitted"
+  },
+  {
+    "track": "track_3",
+    "metric": "spider_sr",
+    "slug": "v2d-challenge-track3-sp-sr",
+    "higher_is_better": true,
+    "rules_url": "https://www.kaggle.com/competitions/v2d-challenge-track3-sp-sr/rules",
+    "entry_status": "not_checked",
+    "submission_status": "not_submitted"
+  },
+  {
+    "track": "track_3",
+    "metric": "maniptrans_sr",
+    "slug": "v2d-challenge-track3-mp-sr",
+    "higher_is_better": true,
+    "rules_url": "https://www.kaggle.com/competitions/v2d-challenge-track3-mp-sr/rules",
+    "entry_status": "not_checked",
+    "submission_status": "not_submitted"
+  },
+  {
+    "track": "track_3",
+    "metric": "rpe_cm",
+    "slug": "v2d-challenge-track3-rpe",
+    "higher_is_better": false,
+    "rules_url": "https://www.kaggle.com/competitions/v2d-challenge-track3-rpe/rules",
+    "entry_status": "not_checked",
+    "submission_status": "not_submitted"
+  },
+  {
+    "track": "track_3",
+    "metric": "mppe_cm",
+    "slug": "v2d-challenge-track3-mppe",
+    "higher_is_better": false,
+    "rules_url": "https://www.kaggle.com/competitions/v2d-challenge-track3-mppe/rules",
+    "entry_status": "not_checked",
+    "submission_status": "not_submitted"
+  },
+  {
+    "track": "track_3_mesh",
+    "metric": "cd_o_cm",
+    "slug": "v2d-challenge-track3-cd-o",
+    "higher_is_better": false,
+    "rules_url": "https://www.kaggle.com/competitions/v2d-challenge-track3-cd-o/rules",
+    "entry_status": "not_checked",
+    "submission_status": "not_submitted"
+  }
+]

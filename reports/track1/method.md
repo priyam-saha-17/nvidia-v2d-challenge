@@ -101,3 +101,24 @@ unbenchmarked implementation choices. Held-out scoring is required to assess the
 
 Third-party sources and pretrained weights retain their original licenses. Gated
 checkpoint files are kept in the user-approved private Kaggle compute dataset.
+
+
+## Additional candidate: shared translation refinement
+
+`filter_common_translation.py` prepares a separate candidate from the complete
+actual exports. It smooths the mean human-root/object translation with a
+second-difference penalty and a fixed first frame. The resulting correction is
+applied to the human and object together. A 5 cm maximum correction bound reduces
+its gain on clips with large proposed changes. Body pose controls, rotations,
+identities, mesh and object scale stay exactly unchanged.
+
+A shared translation preserves hand/object geometry, and fixing the first frame
+preserves the scorer's alignment. Native MHR root translation units and coordinate
+axes must still be checked numerically against the actual reference model on real
+frames. `check_common_translation.py` performs that check. The submission wrapper
+requires its successful report and matching artifact hashes for this candidate.
+
+The solver preserves constant velocity and reduces injected observation jitter in
+an in-memory numerical check; no fixture scoring files are generated. This
+candidate has not yet been applied to the full actual roster or scored. Lower
+trajectory acceleration energy alone does not establish lower held-out error.

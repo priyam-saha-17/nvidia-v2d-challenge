@@ -33,6 +33,16 @@ def main():
     ids=sorted(rows.str.extract(r'^t1_(\d+)_',expand=False).dropna().astype(int).unique())
     if len(ids)!=30:raise ValueError(f'Unexpected official roster: {ids}')
     episodes=a.episodes.resolve()
+    if (episodes/'common_translation_filter_manifest.json').is_file():
+        check=json.loads((episodes/'common_translation_decoder_check.json').read_text())
+        if check.get('passed') is not True or {x['episode'] for x in check['episodes']}!=set(range(30)):
+            raise ValueError('Filtered candidate requires its successful actual reference decoder check')
+        for entry in check['episodes']:
+            stem=f"episode_{entry['episode']:06d}"
+            for suffix,field in [('.npz','output_npz_sha256'),('_object.glb','mesh_sha256')]:
+                path=episodes/(stem+suffix)
+                if hashlib.sha256(path.read_bytes()).hexdigest()!=entry[field]:
+                    raise ValueError('Filtered candidate differs from the reference-validated artifact: '+path.name)
     for episode in ids:
         stem=episodes/f'episode_{episode:06d}'
         with np.load(stem.with_suffix('.npz'),allow_pickle=False) as values:

@@ -126,3 +126,14 @@ Pass each exact notebook/version and local download directory to
 It records artifact hashes and requires 30 unique successful episodes before
 returning success. Retain the complete native bundles and previews separately
 for the final GitHub artifacts and required reproduction container.
+
+
+## Retain native artifacts for GitHub
+
+After both production versions finish with 30 successful episode records, launch
+`notebooks/track1_native_archive/` on CPU. It attaches only the actual production
+outputs, verifies the allowed prediction PTH filenames and native schemas, and
+compresses each episode's predictions, final NPZ/GLB, reports and available
+previews. It excludes pretrained checkpoints, runtime caches and credentials.
+Download every output page and verify `native_artifact_manifest.json` hashes before
+publishing these archives. The job is prepared but has not yet executed.

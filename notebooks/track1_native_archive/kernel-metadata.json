@@ -1,0 +1,16 @@
+{
+  "id": "priyamsaha17/v2d-track1-native-artifact-archive",
+  "title": "V2D Track1 Native Artifact Archive",
+  "code_file": "archive.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": false,
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": [
+    "priyamsaha17/v2d-track1-inference-main-a",
+    "priyamsaha17/v2d-track1-inference-main-b"
+  ]
+}

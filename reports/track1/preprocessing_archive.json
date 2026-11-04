@@ -1,0 +1,9 @@
+{
+  "artifact": "track1-preprocessing-artifacts.tar.gz",
+  "sha256": "f1f57421440cac3544fc3d3fbf4671c8f5017b46c2a143a153468e8dc4f823f0",
+  "bytes": 64720797,
+  "episodes": 30,
+  "files": 146,
+  "unscored_preprocessing_only": true,
+  "pretrained_weights_included": false
+}

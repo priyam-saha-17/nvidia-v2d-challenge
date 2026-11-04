@@ -2,10 +2,13 @@
 
 ## Objective and current state
 
-Produce valid, reproducible submissions to all 23 metric competitions. No competition
-has yet been joined or submitted, and no GPU training has run. Kaggle authentication
-is blocked by the locally configured FailproofAI hook. The supplied credential has
-not been saved. The repository currently has no GitHub remote.
+Produce valid, reproducible submissions to all 23 metric competitions. Kaggle authentication now works as `priyamsaha17`. Entry is confirmed for 4 of 23
+competitions; 19 require rules acceptance (see `rules-to-accept.md`). No competition
+submission or policy training has run. A private T4 diagnostic completed successfully:
+2× Tesla T4 (15,360 MiB each), driver 580.178.04, CUDA 13.0, PyTorch 2.11.0.
+The notebook default is Python 3.13.16. An isolated Python 3.11 runtime installation
+probe has been launched. Credentials are stored only in an ignored mode-600 local
+file. The repository currently has no GitHub remote.
 
 The official deadline is 4 November 2026, 17:00 EST, or **5 November, 03:30 IST**.
 There are five submission groups: Track 1 (5 metrics), Track 2 tiers 1–3
@@ -79,3 +82,11 @@ budget all sequences → produce, validate, upload and poll all five groups.
 - [FlashSAC paper](https://arxiv.org/html/2604.04539v1)
 - [Pinned FlashCHORD runtime](https://github.com/nvidia-isaac/video_to_data/tree/8c778f905cb35f76f8e6cd6e2ea486da4fb9e0ef/robotic_grounding/flash_chord)
 - [Kaggle notebook CLI](https://github.com/Kaggle/kaggle-cli/blob/main/docs/kernels.md)
+
+## Executed Kaggle notebooks
+
+- [Completed T4 diagnostic](https://www.kaggle.com/code/priyamsaha17/v2d-t4-runtime-diagnostic)
+- [Isolated FlashCHORD runtime probe](https://www.kaggle.com/code/priyamsaha17/v2d-flashchord-runtime-probe)
+
+Native MHR CARI4D inference requires approved Hugging Face access to both
+`nvidia/cari4d_commercial` and `facebook/sam-3d-body-dinov3`.

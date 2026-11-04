@@ -1,0 +1,14 @@
+{
+  "id": "priyamsaha17/v2d-flashchord-runtime-probe",
+  "title": "V2D FlashCHORD Runtime Probe",
+  "code_file": "probe.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": []
+}

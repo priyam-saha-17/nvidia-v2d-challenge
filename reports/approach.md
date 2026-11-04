@@ -2,12 +2,12 @@
 
 ## Objective and current state
 
-Produce valid, reproducible submissions to all 23 metric competitions. Kaggle authentication now works as `priyamsaha17`. Entry is confirmed for 4 of 23
-competitions; 19 require rules acceptance (see `rules-to-accept.md`). No competition
+Produce valid, reproducible submissions to all 23 metric competitions. Kaggle authentication now works as `priyamsaha17`. Entry is confirmed for all 23 competitions. The user confirms separate NVIDIA team registration. No competition
 submission or policy training has run. A private T4 diagnostic completed successfully:
 2× Tesla T4 (15,360 MiB each), driver 580.178.04, CUDA 13.0, PyTorch 2.11.0.
-The notebook default is Python 3.13.16. An isolated Python 3.11 runtime installation
-probe has been launched. Credentials are stored only in an ignored mode-600 local
+The notebook default is Python 3.13.16. The isolated Python 3.11 runtime installation probe passed JAX GPU computation,
+Warp CUDA availability, and Newton/FlashCHORD imports. An actual tissue-box simulation
+and short-training smoke test has now been launched. Credentials are stored only in an ignored mode-600 local
 file. The repository currently has no GitHub remote.
 
 The official deadline is 4 November 2026, 17:00 EST, or **5 November, 03:30 IST**.
@@ -90,3 +90,8 @@ budget all sequences → produce, validate, upload and poll all five groups.
 
 Native MHR CARI4D inference requires approved Hugging Face access to both
 `nvidia/cari4d_commercial` and `facebook/sam-3d-body-dinov3`.
+
+- [Actual simulation/training smoke test (pending)](https://www.kaggle.com/code/priyamsaha17/v2d-flashchord-training-smoke)
+
+The user confirms approved Hugging Face access; private local token configuration
+is pending. A real GitHub repository URL is also pending. No scoring submissions exist.
